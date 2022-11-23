@@ -17,6 +17,8 @@ import { canResourceHaveChildren } from '../../util/can-resource-have-children';
 import { getAttributionBreakpointCheck } from '../../util/is-attribution-breakpoint';
 import { getFileWithChildrenCheck } from '../../util/is-file-with-children';
 
+// pointless comment
+
 export function getUpdatedProgressBarData(
   resources: Resources,
   manualAttributions: Attributions,
@@ -25,11 +27,11 @@ export function getUpdatedProgressBarData(
   resolvedExternalAttributions: Set<string>,
   isAttributionBreakpoint: PathPredicate,
   isFileWithChildren: PathPredicate
-): ProgressBarData {
+): ProgressBarData | null {
   // console.log("calculating progress bar data");
   // console.log(performance.now());
 
-  getFolderProgressBarData({
+  return getFolderProgressBarData({
     resources: resources,
     resourceId: null,
     manualAttributions: manualAttributions,
@@ -38,28 +40,9 @@ export function getUpdatedProgressBarData(
     resolvedExternalAttributions: resolvedExternalAttributions,
     isAttributionBreakpoint: isAttributionBreakpoint,
     isFileWithChildren: isFileWithChildren
-  })
-
-  const progressBarData = getEmptyProgressBarData();
-
-  const attributions = filterResourcesToAttributions(
-    resourcesToExternalAttributions,
-    resolvedExternalAttributions
-  );
-
-  updateProgressBarDataForResources(
-    progressBarData,
-    { '': resources },
-    manualAttributions,
-    resourcesToManualAttributions,
-    attributions,
-    isAttributionBreakpoint,
-    isFileWithChildren
-  );
+  });
   // console.log("done");
   // console.log(performance.now());
-
-  return progressBarData;
 }
 
 export function filterResourcesToAttributions(
@@ -193,7 +176,7 @@ export function getFolderProgressBarData(
   // const isFileWithChildren = getFileWithChildrenCheck(args.filesWithChildren);
   const progressBarData = getEmptyProgressBarData();
 
-  let resources = args.resources;
+  let resources = {'': args.resources};
   if (args.resourceId !== null) {
     const parentAndCurrentResources = args.resourceId.slice(1, -1).split('/');
     resources = {
