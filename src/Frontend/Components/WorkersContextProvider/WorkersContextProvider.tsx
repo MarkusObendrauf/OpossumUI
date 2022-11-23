@@ -100,12 +100,11 @@ export const TopProgressBarWorkerContextProvider: FC<{
 
 const folderProgressBarWorker = getNewProgressBarWorker();
 
-// TODO rename to FolderProgressBarWorkerContext
-export const ProgressBarWorkerContext = React.createContext(
+export const FolderProgressBarWorkerContext = React.createContext(
   folderProgressBarWorker
 );
 
-export const ProgressBarWorkerContextProvider: FC<{
+export const FolderProgressBarWorkerContextProvider: FC<{
   children: ReactNode | null;
 }> = ({ children }) => {
   const resources = useAppSelector(getResources);
@@ -132,8 +131,8 @@ export const ProgressBarWorkerContextProvider: FC<{
     filesWithChildren,
   ]);
   return (
-    <ProgressBarWorkerContext.Provider value={folderProgressBarWorker}>
+    <FolderProgressBarWorkerContext.Provider value={folderProgressBarWorker}>
       {children}
-    </ProgressBarWorkerContext.Provider>
+    </FolderProgressBarWorkerContext.Provider>
   );
 };

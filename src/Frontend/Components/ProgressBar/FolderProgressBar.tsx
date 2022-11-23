@@ -20,7 +20,7 @@ import {
 } from '../../types/types';
 import { useAppSelector } from '../../state/hooks';
 import { getResolvedExternalAttributions } from '../../state/selectors/audit-view-resource-selectors';
-import { ProgressBarWorkerContext } from '../WorkersContextProvider/WorkersContextProvider';
+import { FolderProgressBarWorkerContext } from '../WorkersContextProvider/WorkersContextProvider';
 import { getFolderProgressBarData } from '../../state/helpers/progress-bar-data-helpers';
 import { ProgressBar } from './ProgressBar';
 import { getFileWithChildrenCheck } from '../../util/is-file-with-children';
@@ -65,7 +65,7 @@ export function FolderProgressBar(props: FolderProgressBarProps): ReactElement {
     EMPTY_FOLDER_PROGRESS_BAR_AND_RESOURCE_ID
   );
 
-  const folderProgressBarWorker = useContext(ProgressBarWorkerContext);
+  const folderProgressBarWorker = useContext(FolderProgressBarWorkerContext);
 
   const folderProgressBarWorkerArgs = useMemo(
     () => ({
