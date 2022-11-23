@@ -210,8 +210,8 @@ export const resourceState = (
             action.payload.resourcesToManualAttributions,
             action.payload.resourcesToExternalAttributions,
             action.payload.resolvedExternalAttributions,
-            getAttributionBreakpointCheckForResourceState(state),
-            getFileWithChildrenCheckForResourceState(state)
+            state.allViews.attributionBreakpoints,
+            state.allViews.filesWithChildren,
           ),
         },
       };
@@ -364,8 +364,8 @@ export const resourceState = (
             newManualData.resourcesToAttributions,
             state.allViews.externalData.resourcesToAttributions,
             state.auditView.resolvedExternalAttributions,
-            getAttributionBreakpointCheckForResourceState(state),
-            getFileWithChildrenCheckForResourceState(state)
+            state.allViews.attributionBreakpoints,
+            state.allViews.filesWithChildren,
           ),
         },
         auditView: {
@@ -392,8 +392,8 @@ export const resourceState = (
         updatedManualData.resourcesToAttributions,
         state.allViews.externalData.resourcesToAttributions,
         state.auditView.resolvedExternalAttributions,
-        getAttributionBreakpointCheckForResourceState(state),
-        getFileWithChildrenCheckForResourceState(state)
+        state.allViews.attributionBreakpoints,
+        state.allViews.filesWithChildren,
       );
       console.log('changing state via ACTION_UPDATE_ATTRIBUTION');
       const x =  {
@@ -453,8 +453,8 @@ export const resourceState = (
             manualDataAfterDeletion.resourcesToAttributions,
             state.allViews.externalData.resourcesToAttributions,
             state.auditView.resolvedExternalAttributions,
-            getAttributionBreakpointCheckForResourceState(state),
-            getFileWithChildrenCheckForResourceState(state)
+            state.allViews.attributionBreakpoints,
+            state.allViews.filesWithChildren
           ),
           attributionIdMarkedForReplacement:
             newAttributionIdMarkedForReplacement,
@@ -493,8 +493,8 @@ export const resourceState = (
             manualDataForReplace.resourcesToAttributions,
             state.allViews.externalData.resourcesToAttributions,
             state.auditView.resolvedExternalAttributions,
-            getAttributionBreakpointCheckForResourceState(state),
-            getFileWithChildrenCheckForResourceState(state)
+            state.allViews.attributionBreakpoints,
+            state.allViews.filesWithChildren
           ),
         },
         auditView: {
@@ -538,8 +538,8 @@ export const resourceState = (
             manualDataAfterForLinking.resourcesToAttributions,
             state.allViews.externalData.resourcesToAttributions,
             state.auditView.resolvedExternalAttributions,
-            getAttributionBreakpointCheckForResourceState(state),
-            getFileWithChildrenCheckForResourceState(state)
+            state.allViews.attributionBreakpoints,
+            state.allViews.filesWithChildren
           ),
         },
         auditView: {
@@ -564,8 +564,8 @@ export const resourceState = (
         manualDataAfterUnlinking.resourcesToAttributions,
         state.allViews.externalData.resourcesToAttributions,
         state.auditView.resolvedExternalAttributions,
-        getAttributionBreakpointCheckForResourceState(state),
-        getFileWithChildrenCheckForResourceState(state)
+        state.allViews.attributionBreakpoints,
+        state.allViews.filesWithChildren
       );
 
       return {
@@ -626,8 +626,8 @@ export const resourceState = (
             state.allViews.manualData.resourcesToAttributions,
             state.allViews.externalData.resourcesToAttributions,
             resolvedExternalAttributionsWithAddedAttribution,
-            getAttributionBreakpointCheckForResourceState(state),
-            getFileWithChildrenCheckForResourceState(state)
+            state.allViews.attributionBreakpoints,
+            state.allViews.filesWithChildren
           ),
           externalData: {
             ...state.allViews.externalData,
@@ -657,8 +657,8 @@ export const resourceState = (
             state.allViews.manualData.resourcesToAttributions,
             state.allViews.externalData.resourcesToAttributions,
             resolvedExternalAttributionsWithRemovedAttributions,
-            getAttributionBreakpointCheckForResourceState(state),
-            getFileWithChildrenCheckForResourceState(state)
+            state.allViews.attributionBreakpoints,
+            state.allViews.filesWithChildren
           ),
           externalData: {
             ...state.allViews.externalData,
