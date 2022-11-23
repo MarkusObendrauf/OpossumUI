@@ -104,12 +104,12 @@ export interface FolderProgressBarDataAndResourceId {
 }
 
 export interface ProgressBarWorkerArgs {
-  resources: Resources | null;
-  resourceId: string;
+  resources: Resources;
+  resourceId: string | null; // used to get the current subtree, not needed for us
   manualAttributions: Attributions;
   resourcesToManualAttributions: ResourcesToAttributions;
   resourcesToExternalAttributions: ResourcesToAttributions;
   resolvedExternalAttributions: Set<string>;
-  attributionBreakpoints: Set<string>;
-  filesWithChildren: Set<string>;
+  isAttributionBreakpoint: PathPredicate; // instead have isAttributinBreakpoint
+  isFileWithChildren: PathPredicate; // instead have isFileWithChildren
 }

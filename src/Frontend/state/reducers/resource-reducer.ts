@@ -379,30 +379,42 @@ export const resourceState = (
         },
       };
     case ACTION_UPDATE_ATTRIBUTION:
+      console.log('getting manual data');
       const updatedManualData = updateManualAttribution(
         action.payload.attributionId,
         state.allViews.manualData,
         action.payload.strippedPackageInfo
       );
-      return {
+      console.log('getting progress data');
+      const updatedProgressData = getUpdatedProgressBarData(
+        state.allViews.resources as Resources,
+        updatedManualData.attributions,
+        updatedManualData.resourcesToAttributions,
+        state.allViews.externalData.resourcesToAttributions,
+        state.auditView.resolvedExternalAttributions,
+        getAttributionBreakpointCheckForResourceState(state),
+        getFileWithChildrenCheckForResourceState(state)
+      );
+      console.log('changing state via ACTION_UPDATE_ATTRIBUTION');
+      const x =  {
         ...state,
         allViews: {
           ...state.allViews,
-          manualData: updatedManualData,
-          progressBarData: getUpdatedProgressBarData(
-            state.allViews.resources as Resources,
-            updatedManualData.attributions,
-            updatedManualData.resourcesToAttributions,
-            state.allViews.externalData.resourcesToAttributions,
-            state.auditView.resolvedExternalAttributions,
-            getAttributionBreakpointCheckForResourceState(state),
-            getFileWithChildrenCheckForResourceState(state)
-          ),
+          manualData: {
+            ...state.allViews.manualData,
+            attributions: {
+              ...state.allViews.manualData.attributions,
+              [action.payload.attributionId]: action.payload.strippedPackageInfo,
+            },
+          },
+          progressBarData: updatedProgressData,
           ...(action.payload.jumpToUpdatedAttribution && {
             temporaryPackageInfo: action.payload.strippedPackageInfo,
           }),
         },
       };
+      console.log('done');
+      return x;
     case ACTION_DELETE_ATTRIBUTION:
       const attributionToDeleteId = action.payload;
       const manualDataAfterDeletion: AttributionData = deleteManualAttribution(

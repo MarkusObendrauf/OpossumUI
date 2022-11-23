@@ -5,3 +5,4 @@
 export function getNewFolderProgressBarWorker(): Worker {
   return new Worker(new URL('./folder-progress-bar-worker', import.meta.url));
 }
+// TODO add new line here

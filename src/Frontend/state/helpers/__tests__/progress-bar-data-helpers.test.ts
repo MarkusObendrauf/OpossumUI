@@ -411,8 +411,8 @@ describe('The getFolderProgressBarData function', () => {
       resourcesToManualAttributions: testResourcesToManualAttributions,
       resourcesToExternalAttributions: testResourcesToExternalAttributions,
       resolvedExternalAttributions: new Set<string>(),
-      attributionBreakpoints: new Set<string>(),
-      filesWithChildren: new Set<string>(),
+      isAttributionBreakpoint: () => false,
+      isFileWithChildren: () => false,
     });
     expect(progressBarData?.fileCount).toEqual(2);
     expect(progressBarData?.filesWithManualAttributionCount).toEqual(1);

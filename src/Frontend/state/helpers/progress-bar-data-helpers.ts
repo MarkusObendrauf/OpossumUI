@@ -26,20 +26,38 @@ export function getUpdatedProgressBarData(
   isAttributionBreakpoint: PathPredicate,
   isFileWithChildren: PathPredicate
 ): ProgressBarData {
+  // console.log("calculating progress bar data");
+  // console.log(performance.now());
+
+  getFolderProgressBarData({
+    resources: resources,
+    resourceId: null,
+    manualAttributions: manualAttributions,
+    resourcesToManualAttributions: resourcesToManualAttributions,
+    resourcesToExternalAttributions: resourcesToExternalAttributions,
+    resolvedExternalAttributions: resolvedExternalAttributions,
+    isAttributionBreakpoint: isAttributionBreakpoint,
+    isFileWithChildren: isFileWithChildren
+  })
+
   const progressBarData = getEmptyProgressBarData();
+
+  const attributions = filterResourcesToAttributions(
+    resourcesToExternalAttributions,
+    resolvedExternalAttributions
+  );
 
   updateProgressBarDataForResources(
     progressBarData,
     { '': resources },
     manualAttributions,
     resourcesToManualAttributions,
-    filterResourcesToAttributions(
-      resourcesToExternalAttributions,
-      resolvedExternalAttributions
-    ),
+    attributions,
     isAttributionBreakpoint,
     isFileWithChildren
   );
+  // console.log("done");
+  // console.log(performance.now());
 
   return progressBarData;
 }
@@ -169,16 +187,19 @@ export function resourceHasOnlyPreSelectedAttributions(
 export function getFolderProgressBarData(
   args: ProgressBarWorkerArgs
 ): ProgressBarData | null {
-  const isAttributionBreakpoint = getAttributionBreakpointCheck(
-    args.attributionBreakpoints
-  );
-  const isFileWithChildren = getFileWithChildrenCheck(args.filesWithChildren);
+  // const isAttributionBreakpoint = getAttributionBreakpointCheck(
+  //   args.attributionBreakpoints
+  // );
+  // const isFileWithChildren = getFileWithChildrenCheck(args.filesWithChildren);
   const progressBarData = getEmptyProgressBarData();
 
-  const parentAndCurrentResources = args.resourceId.slice(1, -1).split('/');
-  const resources = {
-    '': getCurrentSubTree(parentAndCurrentResources, args.resources || {}),
-  };
+  let resources = args.resources;
+  if (args.resourceId !== null) {
+    const parentAndCurrentResources = args.resourceId.slice(1, -1).split('/');
+    resources = {
+      '': getCurrentSubTree(parentAndCurrentResources, args.resources || {}),
+    };
+  }
 
   updateProgressBarDataForResources(
     progressBarData,
@@ -189,8 +210,8 @@ export function getFolderProgressBarData(
       args.resourcesToExternalAttributions,
       args.resolvedExternalAttributions
     ),
-    isAttributionBreakpoint,
-    isFileWithChildren
+    args.isAttributionBreakpoint,
+    args.isFileWithChildren
   );
 
   return progressBarData;
