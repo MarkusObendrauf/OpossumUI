@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-export function getNewFolderProgressBarWorker(): Worker {
+// TODO rename this file, change link
+export function getNewProgressBarWorker(): Worker {
   return new Worker(new URL('./folder-progress-bar-worker', import.meta.url));
 }
-// TODO add new line here

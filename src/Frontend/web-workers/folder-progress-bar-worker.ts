@@ -2,6 +2,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
+// TODO rename this file
 import { Resources, ResourcesToAttributions } from '../../shared/shared-types';
 import { getFolderProgressBarData } from '../state/helpers/progress-bar-data-helpers';
 import { FolderProgressBarDataAndResourceId } from '../types/types';

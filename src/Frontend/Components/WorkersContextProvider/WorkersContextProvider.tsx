@@ -13,7 +13,7 @@ import {
   getResourcesToExternalAttributions,
 } from '../../state/selectors/all-views-resource-selectors';
 import { getNewAccordionWorkers } from '../../web-workers/get-new-accordion-workers';
-import { getNewFolderProgressBarWorker } from '../../web-workers/get-new-folder-progress-bar-worker';
+import { getNewProgressBarWorker } from '../../web-workers/get-new-folder-progress-bar-worker';
 import { PanelAttributionData } from '../../util/get-contained-packages';
 
 const resourceDetailsTabsWorkers = getNewAccordionWorkers();
@@ -58,8 +58,49 @@ export const AccordionWorkersContextProvider: FC<{
   );
 };
 
-const folderProgressBarWorker = getNewFolderProgressBarWorker();
+const topProgressBarWorker = getNewProgressBarWorker();
 
+export const TopProgressBarWorkerContext = React.createContext(
+  topProgressBarWorker
+);
+
+// TODO understand this, see if it needs to be
+export const TopProgressBarWorkerContextProvider: FC<{
+  children: ReactNode | null;
+}> = ({ children }) => {
+  const resources = useAppSelector(getResources);
+  const resourcesToExternalAttributions = useAppSelector(
+    getResourcesToExternalAttributions
+  );
+  const attributionBreakpoints = useAppSelector(getAttributionBreakpoints);
+  const filesWithChildren = useAppSelector(getFilesWithChildren);
+  useMemo(() => {
+    try {
+      topProgressBarWorker.postMessage({
+        resources,
+        resourcesToExternalAttributions,
+        attributionBreakpoints,
+        filesWithChildren,
+      });
+    } catch (error) {
+      console.info('Web worker error in workers context provider: ', error);
+    }
+  }, [
+    resources,
+    resourcesToExternalAttributions,
+    attributionBreakpoints,
+    filesWithChildren,
+  ]);
+  return (
+    <TopProgressBarWorkerContext.Provider value={folderProgressBarWorker}>
+      {children}
+    </TopProgressBarWorkerContext.Provider>
+  );
+};
+
+const folderProgressBarWorker = getNewProgressBarWorker();
+
+// TODO rename to FolderProgressBarWorkerContext
 export const ProgressBarWorkerContext = React.createContext(
   folderProgressBarWorker
 );

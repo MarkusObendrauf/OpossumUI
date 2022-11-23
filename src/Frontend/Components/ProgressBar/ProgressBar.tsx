@@ -42,7 +42,7 @@ interface ProgressBarProps {
   sx: SxProps;
   progressBarData: ProgressBarData;
   label: string;
-  isFolderProgressBar?: boolean;
+  isFolderProgressBar: boolean; // was optional before
 }
 
 export function ProgressBar(props: ProgressBarProps): ReactElement {
