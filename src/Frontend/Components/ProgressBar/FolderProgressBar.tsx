@@ -152,6 +152,7 @@ async function loadProgressBarData(
   );
 
   try {
+    console.log(workerArgs);
     worker.postMessage(workerArgs);
 
     worker.onmessage = ({ data: { output } }): void => {

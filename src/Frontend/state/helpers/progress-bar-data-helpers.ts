@@ -32,7 +32,7 @@ export function getUpdatedProgressBarData(
 
   return getFolderProgressBarData({
     resources: resources,
-    resourceId: null,
+    resourceId: "/",
     manualAttributions: manualAttributions,
     resourcesToManualAttributions: resourcesToManualAttributions,
     resourcesToExternalAttributions: resourcesToExternalAttributions,
@@ -169,7 +169,8 @@ export function resourceHasOnlyPreSelectedAttributions(
 export function getFolderProgressBarData(
   args: ProgressBarWorkerArgs
 ): ProgressBarData | null {
-  console.log("calculating progress bar data");
+  console.log("getFolderProgressBarData called with args");
+  console.log(args);
   const isAttributionBreakpoint = getAttributionBreakpointCheck(
     args.attributionBreakpoints
   );
@@ -177,13 +178,27 @@ export function getFolderProgressBarData(
   const progressBarData = getEmptyProgressBarData();
 
   // TODO improve this block
-  let resources = {'': args.resources || {}};
-  if (args.resourceId !== null) {
+  const r = args.resources || {};
+  let resources = {'': r};
+  if (args.resourceId) {
     const parentAndCurrentResources = args.resourceId.slice(1, -1).split('/');
     resources = {
       '': getCurrentSubTree(parentAndCurrentResources, args.resources || {}),
     };
   }
+
+  // console.log("args:", [
+  //   progressBarData,
+  //   resources,
+  //   args.manualAttributions,
+  //   args.resourcesToManualAttributions,
+  //   filterResourcesToAttributions(
+  //     args.resourcesToExternalAttributions,
+  //     args.resolvedExternalAttributions
+  //   ),
+  //   isAttributionBreakpoint,
+  //   isFileWithChildren]
+  //   );
 
   updateProgressBarDataForResources(
     progressBarData,

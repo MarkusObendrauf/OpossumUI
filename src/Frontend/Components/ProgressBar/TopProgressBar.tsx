@@ -47,11 +47,13 @@ export function TopProgressBar(): ReactElement {
 
   const topProgressBarWorkerArgs = useMemo(
     () => ({
+      resources,
       manualAttributions,
       resourcesToManualAttributions,
       resolvedExternalAttributions,
     }),
     [
+      resources,
       manualAttributions,
       resourcesToManualAttributions,
       resolvedExternalAttributions,
@@ -61,7 +63,7 @@ export function TopProgressBar(): ReactElement {
   const topProgressBarSyncFallbackArgs = useMemo(
     () => ({
       resources,
-      resourceId: null,
+      resourceId: "/",
       manualAttributions,
       resourcesToManualAttributions,
       resourcesToExternalAttributions,
@@ -71,7 +73,6 @@ export function TopProgressBar(): ReactElement {
     }),
     [
       resources,
-      null,
       manualAttributions,
       resourcesToManualAttributions,
       resourcesToExternalAttributions,
@@ -116,6 +117,7 @@ async function loadProgressBarData(
   );
 
   try {
+    console.log(workerArgs);
     worker.postMessage(workerArgs);
 
     worker.onmessage = ({ data: { output } }): void => {
@@ -136,7 +138,6 @@ async function loadProgressBarData(
       syncFallbackArgs
     );
   }
-  // TODO similar try catch for the new worker
 }
 
 function logErrorAndComputeInMainProcess(

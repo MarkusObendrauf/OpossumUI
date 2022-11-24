@@ -15,7 +15,6 @@ let cachedFilesWithChildren: Set<string> | null = null;
 
 self.onmessage = ({
   data: {
-    isFolderBar,
     resources,
     resourceId,
     manualAttributions,
@@ -26,9 +25,6 @@ self.onmessage = ({
     filesWithChildren,
   },
 }): void => {
-  if (isFolderBar && !resourceId) {
-    return;
-  }
   if (resources) cachedResources = resources;
   if (resourcesToExternalAttributions)
     cachedResourcesToExternalAttributions = resourcesToExternalAttributions;
