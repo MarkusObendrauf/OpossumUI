@@ -23,8 +23,6 @@ import { getResolvedExternalAttributions } from '../../state/selectors/audit-vie
 import { FolderProgressBarWorkerContext } from '../WorkersContextProvider/WorkersContextProvider';
 import { getProgressBarData } from '../../state/helpers/progress-bar-data-helpers';
 import { ProgressBar } from './ProgressBar';
-import { getFileWithChildrenCheck } from '../../util/is-file-with-children';
-import { getAttributionBreakpointCheck } from '../../util/is-attribution-breakpoint';
 
 const classes = {
   root: {

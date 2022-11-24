@@ -437,5 +437,4 @@ function getTestObjectsForResourcesWithPreSelectedAttributions(): {
     uuid3: { packageName: 'Angular' },
   };
   return { testResourcesToManualAttributions, testManualAttributions };
-
 }

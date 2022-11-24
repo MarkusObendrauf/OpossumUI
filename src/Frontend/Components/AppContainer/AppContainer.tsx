@@ -12,7 +12,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import {
   AccordionWorkersContextProvider,
   TopProgressBarWorkerContextProvider,
-  FolderProgressBarWorkerContextProvider
+  FolderProgressBarWorkerContextProvider,
 } from '../WorkersContextProvider/WorkersContextProvider';
 
 const store = createAppStore();

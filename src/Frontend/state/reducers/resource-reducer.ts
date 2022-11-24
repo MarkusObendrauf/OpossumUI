@@ -40,7 +40,6 @@ import {
   ACTION_SET_IS_SAVING_DISABLED,
   ACTION_SET_MANUAL_ATTRIBUTION_DATA,
   ACTION_SET_MULTI_SELECT_SELECTED_ATTRIBUTION_IDS,
-  ACTION_SET_PROGRESS_BAR_DATA,
   ACTION_SET_PROJECT_METADATA,
   ACTION_SET_RESOLVED_EXTERNAL_ATTRIBUTIONS,
   ACTION_SET_RESOURCES,
@@ -62,7 +61,6 @@ import {
   linkToAttributionManualData,
   replaceAttributionWithMatchingAttributionId,
   unlinkResourceFromAttributionId,
-  updateManualAttribution,
 } from '../helpers/save-action-helpers';
 import {
   addUnresolvedAttributionsToResourcesWithAttributedChildren,
@@ -72,7 +70,6 @@ import {
 import { getClosestParentAttributionIds } from '../../util/get-closest-parent-attributions';
 import { getAlphabeticalComparer } from '../../util/get-alphabetical-comparer';
 import { getAttributionBreakpointCheckForResourceState } from '../../util/is-attribution-breakpoint';
-import { getFileWithChildrenCheckForResourceState } from '../../util/is-file-with-children';
 
 export const initialResourceState: ResourceState = {
   allViews: {
@@ -361,7 +358,8 @@ export const resourceState = (
             ...state.allViews.manualData,
             attributions: {
               ...state.allViews.manualData.attributions,
-              [action.payload.attributionId]: action.payload.strippedPackageInfo,
+              [action.payload.attributionId]:
+                action.payload.strippedPackageInfo,
             },
           },
         },

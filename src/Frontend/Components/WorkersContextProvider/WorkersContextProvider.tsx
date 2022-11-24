@@ -60,9 +60,8 @@ export const AccordionWorkersContextProvider: FC<{
 
 const topProgressBarWorker = getNewProgressBarWorker();
 
-export const TopProgressBarWorkerContext = React.createContext(
-  topProgressBarWorker
-);
+export const TopProgressBarWorkerContext =
+  React.createContext(topProgressBarWorker);
 
 // TODO combine both into one?
 export const TopProgressBarWorkerContextProvider: FC<{
