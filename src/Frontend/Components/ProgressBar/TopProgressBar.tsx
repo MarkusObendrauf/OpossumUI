@@ -113,7 +113,6 @@ async function loadProgressBarData(
   syncFallbackArgs: ProgressBarWorkerArgs
 ): Promise<void> {
   try {
-    console.log("calling top worker with args:", workerArgs);
     worker.postMessage(workerArgs);
 
     worker.onmessage = ({ data: { output } }): void => {

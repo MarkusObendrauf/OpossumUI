@@ -153,9 +153,6 @@ export function getProgressBarData(
     '': getCurrentSubTree(parentAndCurrentResources, args.resources || {}),
   };
 
-  console.log("calling filterResourcesToAttributions")
-  console.trace()
-
   updateProgressBarDataForResources(
     progressBarData,
     resources,

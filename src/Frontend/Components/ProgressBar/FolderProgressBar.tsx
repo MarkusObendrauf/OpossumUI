@@ -152,7 +152,6 @@ async function loadProgressBarData(
   );
 
   try {
-    console.log("calling folder worker with args:", workerArgs);
     worker.postMessage(workerArgs);
 
     worker.onmessage = ({ data: { output } }): void => {

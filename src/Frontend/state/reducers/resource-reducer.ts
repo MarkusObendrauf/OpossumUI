@@ -353,13 +353,11 @@ export const resourceState = (
         },
       };
     case ACTION_UPDATE_ATTRIBUTION:
-      console.log('getting manual data');
       const updatedManualData = updateManualAttribution(
         action.payload.attributionId,
         state.allViews.manualData,
         action.payload.strippedPackageInfo
       );
-      console.log('getting progress data');
       // const updatedProgressData = getUpdatedProgressBarData(
       //   state.allViews.resources as Resources,
       //   updatedManualData.attributions,
@@ -369,7 +367,6 @@ export const resourceState = (
       //   state.allViews.attributionBreakpoints,
       //   state.allViews.filesWithChildren,
       // );
-      console.log('changing state via ACTION_UPDATE_ATTRIBUTION');
       const x =  {
         ...state,
         allViews: {
@@ -387,7 +384,6 @@ export const resourceState = (
           // }),
         },
       };
-      console.log('done');
       return x;
     case ACTION_DELETE_ATTRIBUTION:
       const attributionToDeleteId = action.payload;
