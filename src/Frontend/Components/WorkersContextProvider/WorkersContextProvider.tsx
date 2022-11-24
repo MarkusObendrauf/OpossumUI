@@ -13,7 +13,7 @@ import {
   getResourcesToExternalAttributions,
 } from '../../state/selectors/all-views-resource-selectors';
 import { getNewAccordionWorkers } from '../../web-workers/get-new-accordion-workers';
-import { getNewProgressBarWorker } from '../../web-workers/get-new-folder-progress-bar-worker';
+import { getNewProgressBarWorker } from '../../web-workers/get-new-progress-bar-worker';
 import { PanelAttributionData } from '../../util/get-contained-packages';
 
 const resourceDetailsTabsWorkers = getNewAccordionWorkers();

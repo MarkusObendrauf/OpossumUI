@@ -169,6 +169,7 @@ export function resourceHasOnlyPreSelectedAttributions(
 export function getFolderProgressBarData(
   args: ProgressBarWorkerArgs
 ): ProgressBarData | null {
+  console.log("calculating progress bar data");
   const isAttributionBreakpoint = getAttributionBreakpointCheck(
     args.attributionBreakpoints
   );

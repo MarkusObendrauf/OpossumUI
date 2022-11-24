@@ -15,6 +15,7 @@ let cachedFilesWithChildren: Set<string> | null = null;
 
 self.onmessage = ({
   data: {
+    isFolderBar,
     resources,
     resourceId,
     manualAttributions,
@@ -25,41 +26,42 @@ self.onmessage = ({
     filesWithChildren,
   },
 }): void => {
+  if (isFolderBar && !resourceId) {
+    return;
+  }
   if (resources) cachedResources = resources;
   if (resourcesToExternalAttributions)
     cachedResourcesToExternalAttributions = resourcesToExternalAttributions;
   if (attributionBreakpoints)
     cachedAttributionBreakpoints = attributionBreakpoints;
   if (filesWithChildren) cachedFilesWithChildren = filesWithChildren;
-  if (resourceId) {
-    if (
-      cachedResources &&
-      cachedResourcesToExternalAttributions &&
-      cachedAttributionBreakpoints &&
-      cachedFilesWithChildren
-    ) {
-      const progressBarData = getFolderProgressBarData({
-        resources: cachedResources,
-        resourceId,
-        manualAttributions,
-        resourcesToManualAttributions,
-        resourcesToExternalAttributions: cachedResourcesToExternalAttributions,
-        resolvedExternalAttributions,
-        attributionBreakpoints: cachedAttributionBreakpoints,
-        filesWithChildren: cachedFilesWithChildren,
-      });
+  if (
+    cachedResources &&
+    cachedResourcesToExternalAttributions &&
+    cachedAttributionBreakpoints &&
+    cachedFilesWithChildren
+  ) {
+    const progressBarData = getFolderProgressBarData({
+      resources: cachedResources,
+      resourceId,
+      manualAttributions,
+      resourcesToManualAttributions,
+      resourcesToExternalAttributions: cachedResourcesToExternalAttributions,
+      resolvedExternalAttributions,
+      attributionBreakpoints: cachedAttributionBreakpoints,
+      filesWithChildren: cachedFilesWithChildren,
+    });
 
-      const output: FolderProgressBarDataAndResourceId = {
-        folderProgressBarData: progressBarData,
-        resourceId,
-      };
+    const output: FolderProgressBarDataAndResourceId = {
+      folderProgressBarData: progressBarData,
+      resourceId,
+    };
 
-      self.postMessage({
-        output,
-      });
-    } else {
-      self.postMessage({ output: null });
-    }
+    self.postMessage({
+      output,
+    });
+  } else {
+    self.postMessage({ output: null });
   }
 };
 

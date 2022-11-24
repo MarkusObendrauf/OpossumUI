@@ -386,15 +386,15 @@ export const resourceState = (
         action.payload.strippedPackageInfo
       );
       console.log('getting progress data');
-      const updatedProgressData = getUpdatedProgressBarData(
-        state.allViews.resources as Resources,
-        updatedManualData.attributions,
-        updatedManualData.resourcesToAttributions,
-        state.allViews.externalData.resourcesToAttributions,
-        state.auditView.resolvedExternalAttributions,
-        state.allViews.attributionBreakpoints,
-        state.allViews.filesWithChildren,
-      );
+      // const updatedProgressData = getUpdatedProgressBarData(
+      //   state.allViews.resources as Resources,
+      //   updatedManualData.attributions,
+      //   updatedManualData.resourcesToAttributions,
+      //   state.allViews.externalData.resourcesToAttributions,
+      //   state.auditView.resolvedExternalAttributions,
+      //   state.allViews.attributionBreakpoints,
+      //   state.allViews.filesWithChildren,
+      // );
       console.log('changing state via ACTION_UPDATE_ATTRIBUTION');
       const x =  {
         ...state,
@@ -407,10 +407,10 @@ export const resourceState = (
               [action.payload.attributionId]: action.payload.strippedPackageInfo,
             },
           },
-          progressBarData: updatedProgressData,
-          ...(action.payload.jumpToUpdatedAttribution && {
-            temporaryPackageInfo: action.payload.strippedPackageInfo,
-          }),
+          // progressBarData: updatedProgressData,
+          // ...(action.payload.jumpToUpdatedAttribution && {
+          //   temporaryPackageInfo: action.payload.strippedPackageInfo,
+          // }),
         },
       };
       console.log('done');

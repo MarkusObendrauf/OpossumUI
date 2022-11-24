@@ -172,7 +172,6 @@ async function loadProgressBarData(
       syncFallbackArgs
     );
   }
-  // TODO similar try catch for the new worker
 }
 
 function logErrorAndComputeInMainProcess(
