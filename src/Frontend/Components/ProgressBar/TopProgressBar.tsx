@@ -143,17 +143,16 @@ async function loadProgressBarData(
 function logErrorAndComputeInMainProcess(
   error: unknown,
   setTopProgressBarData: (
-    topProgressBarData: ProgressBarData
+    topProgressBarData: ProgressBarData | null
   ) => void,
   syncFallbackArgs: ProgressBarWorkerArgs
 ): void {
   console.info('Error in rendering folder progress bar: ', error);
   const folderProgressBarData = getFolderProgressBarData(syncFallbackArgs);
 
-  // is this needed?
-  // setTopProgressBarData({
-  //   folderProgressBarData
-  // });
+  setTopProgressBarData(
+    folderProgressBarData
+  );
 }
 
 }
