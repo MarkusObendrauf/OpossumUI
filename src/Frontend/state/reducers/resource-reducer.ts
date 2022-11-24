@@ -353,21 +353,7 @@ export const resourceState = (
         },
       };
     case ACTION_UPDATE_ATTRIBUTION:
-      const updatedManualData = updateManualAttribution(
-        action.payload.attributionId,
-        state.allViews.manualData,
-        action.payload.strippedPackageInfo
-      );
-      // const updatedProgressData = getUpdatedProgressBarData(
-      //   state.allViews.resources as Resources,
-      //   updatedManualData.attributions,
-      //   updatedManualData.resourcesToAttributions,
-      //   state.allViews.externalData.resourcesToAttributions,
-      //   state.auditView.resolvedExternalAttributions,
-      //   state.allViews.attributionBreakpoints,
-      //   state.allViews.filesWithChildren,
-      // );
-      const x =  {
+      return {
         ...state,
         allViews: {
           ...state.allViews,
@@ -378,13 +364,8 @@ export const resourceState = (
               [action.payload.attributionId]: action.payload.strippedPackageInfo,
             },
           },
-          // progressBarData: updatedProgressData,
-          // ...(action.payload.jumpToUpdatedAttribution && {
-          //   temporaryPackageInfo: action.payload.strippedPackageInfo,
-          // }),
         },
       };
-      return x;
     case ACTION_DELETE_ATTRIBUTION:
       const attributionToDeleteId = action.payload;
       const manualDataAfterDeletion: AttributionData = deleteManualAttribution(
