@@ -2,10 +2,9 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-// TODO rename this file
 import { Resources, ResourcesToAttributions } from '../../shared/shared-types';
-import { getFolderProgressBarData } from '../state/helpers/progress-bar-data-helpers';
-import { FolderProgressBarDataAndResourceId } from '../types/types';
+import { getProgressBarData } from '../state/helpers/progress-bar-data-helpers';
+import { ProgressBarDataAndResourceId } from '../types/types';
 
 let cachedResources: Resources | null = null;
 let cachedResourcesToExternalAttributions: ResourcesToAttributions | null =
@@ -37,7 +36,7 @@ self.onmessage = ({
     cachedAttributionBreakpoints &&
     cachedFilesWithChildren
   ) {
-    const progressBarData = getFolderProgressBarData({
+    const progressBarData = getProgressBarData({
       resources: cachedResources,
       resourceId,
       manualAttributions,
@@ -48,7 +47,7 @@ self.onmessage = ({
       filesWithChildren: cachedFilesWithChildren,
     });
 
-    const output: FolderProgressBarDataAndResourceId = {
+    const output: ProgressBarDataAndResourceId = {
       folderProgressBarData: progressBarData,
       resourceId,
     };

@@ -5,13 +5,13 @@
 
 import MuiBox from '@mui/material/Box';
 import React, { ReactElement, useContext, useMemo, useState } from 'react';
-import { getAttributionBreakpoints, getFilesWithChildren, getManualAttributions, getProgressBarData, getResources, getResourcesToExternalAttributions, getResourcesToManualAttributions } from '../../state/selectors/all-views-resource-selectors';
-import { FolderProgressBarDataAndResourceId, ProgressBarData, ProgressBarWorkerArgs } from '../../types/types';
+import { getAttributionBreakpoints, getFilesWithChildren, getManualAttributions, getResources, getResourcesToExternalAttributions, getResourcesToManualAttributions } from '../../state/selectors/all-views-resource-selectors';
+import { ProgressBarDataAndResourceId, ProgressBarData, ProgressBarWorkerArgs } from '../../types/types';
 import { useAppSelector } from '../../state/hooks';
 import { ProgressBar } from './ProgressBar';
 import { TopProgressBarWorkerContext } from '../WorkersContextProvider/WorkersContextProvider';
 import { getResolvedExternalAttributions } from '../../state/selectors/audit-view-resource-selectors';
-import { getFolderProgressBarData } from '../../state/helpers/progress-bar-data-helpers';
+import { getProgressBarData } from '../../state/helpers/progress-bar-data-helpers';
 
 const classes = {
   root: {
@@ -108,7 +108,7 @@ async function loadProgressBarData(
   worker: Worker,
   workerArgs: Partial<ProgressBarWorkerArgs>,
   setTopProgressBarData: (
-    folderProgressBarData: ProgressBarData | null
+    progressBarData: ProgressBarData | null
   ) => void,
   syncFallbackArgs: ProgressBarWorkerArgs
 ): Promise<void> {
@@ -143,11 +143,11 @@ function logErrorAndComputeInMainProcess(
   ) => void,
   syncFallbackArgs: ProgressBarWorkerArgs
 ): void {
-  console.info('Error in rendering folder progress bar: ', error);
-  const folderProgressBarData = getFolderProgressBarData(syncFallbackArgs);
+  console.info('Error in rendering top progress bar: ', error);
+  const progressBarData = getProgressBarData(syncFallbackArgs);
 
   setTopProgressBarData(
-    folderProgressBarData
+    progressBarData
   );
 }
 

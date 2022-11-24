@@ -98,7 +98,7 @@ export interface AttributionIdsWithCountAndResourceId {
   attributionIdsWithCount: Array<AttributionIdWithCount>;
 }
 
-export interface FolderProgressBarDataAndResourceId {
+export interface ProgressBarDataAndResourceId {
   folderProgressBarData: ProgressBarData | null;
   resourceId: string;
 }

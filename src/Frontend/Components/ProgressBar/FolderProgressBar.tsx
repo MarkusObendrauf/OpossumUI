@@ -14,14 +14,14 @@ import {
   getResourcesToManualAttributions,
 } from '../../state/selectors/all-views-resource-selectors';
 import {
-  FolderProgressBarDataAndResourceId,
+  ProgressBarDataAndResourceId,
   ProgressBarData,
   ProgressBarWorkerArgs,
 } from '../../types/types';
 import { useAppSelector } from '../../state/hooks';
 import { getResolvedExternalAttributions } from '../../state/selectors/audit-view-resource-selectors';
 import { FolderProgressBarWorkerContext } from '../WorkersContextProvider/WorkersContextProvider';
-import { getFolderProgressBarData } from '../../state/helpers/progress-bar-data-helpers';
+import { getProgressBarData } from '../../state/helpers/progress-bar-data-helpers';
 import { ProgressBar } from './ProgressBar';
 import { getFileWithChildrenCheck } from '../../util/is-file-with-children';
 import { getAttributionBreakpointCheck } from '../../util/is-attribution-breakpoint';
@@ -61,7 +61,7 @@ export function FolderProgressBar(props: FolderProgressBarProps): ReactElement {
   const [
     folderProgressBarDataAndResourceId,
     setFolderProgressBarDataAndResourceId,
-  ] = useState<FolderProgressBarDataAndResourceId>(
+  ] = useState<ProgressBarDataAndResourceId>(
     EMPTY_FOLDER_PROGRESS_BAR_AND_RESOURCE_ID
   );
 
@@ -143,7 +143,7 @@ async function loadProgressBarData(
   worker: Worker,
   workerArgs: Partial<ProgressBarWorkerArgs>,
   setFolderProgressBarDataAndResourceId: (
-    folderProgressBarDataAndResourceId: FolderProgressBarDataAndResourceId
+    folderProgressBarDataAndResourceId: ProgressBarDataAndResourceId
   ) => void,
   syncFallbackArgs: ProgressBarWorkerArgs
 ): Promise<void> {
@@ -178,12 +178,12 @@ async function loadProgressBarData(
 function logErrorAndComputeInMainProcess(
   error: unknown,
   setFolderProgressBarDataAndResourceId: (
-    folderProgressBarDataAndResourceId: FolderProgressBarDataAndResourceId
+    folderProgressBarDataAndResourceId: ProgressBarDataAndResourceId
   ) => void,
   syncFallbackArgs: ProgressBarWorkerArgs
 ): void {
   console.info('Error in rendering folder progress bar: ', error);
-  const folderProgressBarData = getFolderProgressBarData(syncFallbackArgs);
+  const folderProgressBarData = getProgressBarData(syncFallbackArgs);
   setFolderProgressBarDataAndResourceId({
     folderProgressBarData,
     resourceId: syncFallbackArgs.resourceId,
