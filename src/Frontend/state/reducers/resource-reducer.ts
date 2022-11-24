@@ -14,7 +14,6 @@ import {
 } from '../../../shared/shared-types';
 import { PackagePanelTitle } from '../../enums/enums';
 import { PanelPackage, ProgressBarData } from '../../types/types';
-import { getUpdatedProgressBarData } from '../helpers/progress-bar-data-helpers';
 import {
   EMPTY_ATTRIBUTION_DATA,
   EMPTY_FREQUENT_LICENSES,
@@ -199,22 +198,6 @@ export const resourceState = (
           temporaryPackageInfo: { ...action.payload },
         },
       };
-    case ACTION_SET_PROGRESS_BAR_DATA:
-      return {
-        ...state,
-        allViews: {
-          ...state.allViews,
-          progressBarData: getUpdatedProgressBarData(
-            action.payload.resources,
-            action.payload.manualAttributions,
-            action.payload.resourcesToManualAttributions,
-            action.payload.resourcesToExternalAttributions,
-            action.payload.resolvedExternalAttributions,
-            state.allViews.attributionBreakpoints,
-            state.allViews.filesWithChildren,
-          ),
-        },
-      };
     case ACTION_SET_SELECTED_RESOURCE_ID:
       const linkedAttributionIds: Array<string> | undefined =
         state.allViews.manualData.resourcesToAttributions[action.payload];
@@ -358,15 +341,6 @@ export const resourceState = (
         allViews: {
           ...state.allViews,
           manualData: newManualData,
-          progressBarData: getUpdatedProgressBarData(
-            state.allViews.resources as Resources,
-            newManualData.attributions,
-            newManualData.resourcesToAttributions,
-            state.allViews.externalData.resourcesToAttributions,
-            state.auditView.resolvedExternalAttributions,
-            state.allViews.attributionBreakpoints,
-            state.allViews.filesWithChildren,
-          ),
         },
         auditView: {
           ...state.auditView,
@@ -447,15 +421,6 @@ export const resourceState = (
         allViews: {
           ...state.allViews,
           manualData: manualDataAfterDeletion,
-          progressBarData: getUpdatedProgressBarData(
-            state.allViews.resources as Resources,
-            manualDataAfterDeletion.attributions,
-            manualDataAfterDeletion.resourcesToAttributions,
-            state.allViews.externalData.resourcesToAttributions,
-            state.auditView.resolvedExternalAttributions,
-            state.allViews.attributionBreakpoints,
-            state.allViews.filesWithChildren
-          ),
           attributionIdMarkedForReplacement:
             newAttributionIdMarkedForReplacement,
         },
@@ -487,15 +452,6 @@ export const resourceState = (
         allViews: {
           ...state.allViews,
           manualData: manualDataForReplace,
-          progressBarData: getUpdatedProgressBarData(
-            state.allViews.resources as Resources,
-            manualDataForReplace.attributions,
-            manualDataForReplace.resourcesToAttributions,
-            state.allViews.externalData.resourcesToAttributions,
-            state.auditView.resolvedExternalAttributions,
-            state.allViews.attributionBreakpoints,
-            state.allViews.filesWithChildren
-          ),
         },
         auditView: {
           ...state.auditView,
@@ -532,15 +488,6 @@ export const resourceState = (
         allViews: {
           ...state.allViews,
           manualData: manualDataAfterForLinking,
-          progressBarData: getUpdatedProgressBarData(
-            state.allViews.resources as Resources,
-            manualDataAfterForLinking.attributions,
-            manualDataAfterForLinking.resourcesToAttributions,
-            state.allViews.externalData.resourcesToAttributions,
-            state.auditView.resolvedExternalAttributions,
-            state.allViews.attributionBreakpoints,
-            state.allViews.filesWithChildren
-          ),
         },
         auditView: {
           ...state.auditView,
@@ -558,22 +505,11 @@ export const resourceState = (
           action.payload.attributionId
         );
 
-      const updatedProgressBarData = getUpdatedProgressBarData(
-        state.allViews.resources as Resources,
-        manualDataAfterUnlinking.attributions,
-        manualDataAfterUnlinking.resourcesToAttributions,
-        state.allViews.externalData.resourcesToAttributions,
-        state.auditView.resolvedExternalAttributions,
-        state.allViews.attributionBreakpoints,
-        state.allViews.filesWithChildren
-      );
-
       return {
         ...state,
         allViews: {
           ...state.allViews,
           manualData: manualDataAfterUnlinking,
-          progressBarData: updatedProgressBarData,
         },
       };
     case ACTION_SET_RESOLVED_EXTERNAL_ATTRIBUTIONS:
@@ -620,15 +556,6 @@ export const resourceState = (
         ...state,
         allViews: {
           ...state.allViews,
-          progressBarData: getUpdatedProgressBarData(
-            state.allViews.resources as Resources,
-            state.allViews.manualData.attributions,
-            state.allViews.manualData.resourcesToAttributions,
-            state.allViews.externalData.resourcesToAttributions,
-            resolvedExternalAttributionsWithAddedAttribution,
-            state.allViews.attributionBreakpoints,
-            state.allViews.filesWithChildren
-          ),
           externalData: {
             ...state.allViews.externalData,
             resourcesWithAttributedChildren,
@@ -651,15 +578,6 @@ export const resourceState = (
         ...state,
         allViews: {
           ...state.allViews,
-          progressBarData: getUpdatedProgressBarData(
-            state.allViews.resources as Resources,
-            state.allViews.manualData.attributions,
-            state.allViews.manualData.resourcesToAttributions,
-            state.allViews.externalData.resourcesToAttributions,
-            resolvedExternalAttributionsWithRemovedAttributions,
-            state.allViews.attributionBreakpoints,
-            state.allViews.filesWithChildren
-          ),
           externalData: {
             ...state.allViews.externalData,
             resourcesWithAttributedChildren:

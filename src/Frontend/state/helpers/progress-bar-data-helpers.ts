@@ -17,33 +17,6 @@ import { canResourceHaveChildren } from '../../util/can-resource-have-children';
 import { getAttributionBreakpointCheck } from '../../util/is-attribution-breakpoint';
 import { getFileWithChildrenCheck } from '../../util/is-file-with-children';
 
-// TODO delete this function
-export function getUpdatedProgressBarData(
-  resources: Resources,
-  manualAttributions: Attributions,
-  resourcesToManualAttributions: ResourcesToAttributions,
-  resourcesToExternalAttributions: ResourcesToAttributions,
-  resolvedExternalAttributions: Set<string>,
-  attributionBreakpoints: Set<string>,
-  filesWithChildren: Set<string>,
-): ProgressBarData | null {
-  // console.log("calculating progress bar data");
-  // console.log(performance.now());
-
-  return getFolderProgressBarData({
-    resources: resources,
-    resourceId: "/",
-    manualAttributions: manualAttributions,
-    resourcesToManualAttributions: resourcesToManualAttributions,
-    resourcesToExternalAttributions: resourcesToExternalAttributions,
-    resolvedExternalAttributions: resolvedExternalAttributions,
-    attributionBreakpoints: attributionBreakpoints,
-    filesWithChildren: filesWithChildren
-  });
-  // console.log("done");
-  // console.log(performance.now());
-}
-
 export function filterResourcesToAttributions(
   resourcesToAttributions: ResourcesToAttributions,
   attributionIdsToRemove: Set<string>
