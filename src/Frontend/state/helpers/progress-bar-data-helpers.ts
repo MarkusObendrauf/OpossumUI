@@ -169,8 +169,6 @@ export function resourceHasOnlyPreSelectedAttributions(
 export function getFolderProgressBarData(
   args: ProgressBarWorkerArgs
 ): ProgressBarData | null {
-  console.log("getFolderProgressBarData called with args");
-  console.log(args);
   const isAttributionBreakpoint = getAttributionBreakpointCheck(
     args.attributionBreakpoints
   );
@@ -187,18 +185,8 @@ export function getFolderProgressBarData(
     };
   }
 
-  // console.log("args:", [
-  //   progressBarData,
-  //   resources,
-  //   args.manualAttributions,
-  //   args.resourcesToManualAttributions,
-  //   filterResourcesToAttributions(
-  //     args.resourcesToExternalAttributions,
-  //     args.resolvedExternalAttributions
-  //   ),
-  //   isAttributionBreakpoint,
-  //   isFileWithChildren]
-  //   );
+  console.log("calling filterResourcesToAttributions")
+  console.trace()
 
   updateProgressBarDataForResources(
     progressBarData,

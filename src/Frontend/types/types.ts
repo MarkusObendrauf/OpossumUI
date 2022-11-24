@@ -105,7 +105,7 @@ export interface FolderProgressBarDataAndResourceId {
 
 export interface ProgressBarWorkerArgs {
   resources: Resources | null;
-  resourceId: string | null; // used to get the current subtree, not needed for us
+  resourceId: string | null; // TODO see if null can really be used, currently we use "/"
   manualAttributions: Attributions;
   resourcesToManualAttributions: ResourcesToAttributions;
   resourcesToExternalAttributions: ResourcesToAttributions;

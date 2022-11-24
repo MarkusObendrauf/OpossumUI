@@ -112,12 +112,8 @@ async function loadProgressBarData(
   ) => void,
   syncFallbackArgs: ProgressBarWorkerArgs
 ): Promise<void> {
-  setTopProgressBarData(
-    null // TODO set this to something smarter? idk
-  );
-
   try {
-    console.log(workerArgs);
+    console.log("calling top worker with args:", workerArgs);
     worker.postMessage(workerArgs);
 
     worker.onmessage = ({ data: { output } }): void => {
