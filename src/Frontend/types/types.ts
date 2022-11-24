@@ -100,12 +100,12 @@ export interface AttributionIdsWithCountAndResourceId {
 
 export interface FolderProgressBarDataAndResourceId {
   folderProgressBarData: ProgressBarData | null;
-  resourceId: string | null;
+  resourceId: string;
 }
 
 export interface ProgressBarWorkerArgs {
   resources: Resources | null;
-  resourceId: string | null; // TODO see if null can really be used, currently we use "/"
+  resourceId: string;
   manualAttributions: Attributions;
   resourcesToManualAttributions: ResourcesToAttributions;
   resourcesToExternalAttributions: ResourcesToAttributions;

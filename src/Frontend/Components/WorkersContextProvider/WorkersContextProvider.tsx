@@ -64,7 +64,7 @@ export const TopProgressBarWorkerContext = React.createContext(
   topProgressBarWorker
 );
 
-// TODO understand this, see if it needs to be
+// TODO combine both into one?
 export const TopProgressBarWorkerContextProvider: FC<{
   children: ReactNode | null;
 }> = ({ children }) => {
