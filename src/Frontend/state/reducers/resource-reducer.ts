@@ -13,7 +13,7 @@ import {
   Resources,
 } from '../../../shared/shared-types';
 import { PackagePanelTitle } from '../../enums/enums';
-import { PanelPackage, ProgressBarData } from '../../types/types';
+import { PanelPackage } from '../../types/types';
 import {
   EMPTY_ATTRIBUTION_DATA,
   EMPTY_FREQUENT_LICENSES,
@@ -77,7 +77,6 @@ export const initialResourceState: ResourceState = {
     manualData: EMPTY_ATTRIBUTION_DATA,
     externalData: EMPTY_ATTRIBUTION_DATA,
     frequentLicences: EMPTY_FREQUENT_LICENSES,
-    progressBarData: null,
     temporaryPackageInfo: {},
     attributionBreakpoints: new Set(),
     filesWithChildren: new Set(),
@@ -115,7 +114,6 @@ export type ResourceState = {
     manualData: AttributionData;
     externalData: AttributionData;
     frequentLicences: FrequentLicences;
-    progressBarData: ProgressBarData | null;
     temporaryPackageInfo: PackageInfo;
     attributionBreakpoints: Set<string>;
     filesWithChildren: Set<string>;

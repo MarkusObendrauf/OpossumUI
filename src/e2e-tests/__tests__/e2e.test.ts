@@ -99,8 +99,6 @@ test.describe('Open file via command line', () => {
     await expect(window.locator(`text=${'jQuery, 16.13.1'}`)).toBeHidden();
   });
 
-  // TODO check that the progress bar shows the right stuff & hint is correct
-
   // getOpenLinkListener does not work properly on Linux
   conditionalTest(os.platform() !== 'linux')(
     'should open an error popup if the base url is invalid',

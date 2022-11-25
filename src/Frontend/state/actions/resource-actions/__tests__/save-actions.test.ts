@@ -20,14 +20,12 @@ import {
 } from '../../../../enums/enums';
 import { createTestAppStore } from '../../../../test-helpers/render-component-with-store';
 import { getParsedInputFileEnrichedWithTestData } from '../../../../test-helpers/general-test-helpers';
-import { ProgressBarData } from '../../../../types/types';
 import {
   getAttributionIdMarkedForReplacement,
   getManualAttributions,
   getManualAttributionsToResources,
   getManualData,
   getPackageInfoOfSelected,
-  getProgressBarData,
   getResourcesToManualAttributions,
   getResourcesWithManualAttributedChildren,
   getTemporaryPackageInfo,
@@ -186,23 +184,6 @@ describe('The savePackageInfo action', () => {
       licenseText: ' test License text',
       attributionConfidence: DiscreteConfidence.High,
     };
-    const expectedInitialProgressBarData: ProgressBarData = {
-      fileCount: 4,
-      filesWithManualAttributionCount: 0,
-      filesWithOnlyExternalAttributionCount: 2,
-      filesWithOnlyPreSelectedAttributionCount: 0,
-      resourcesWithNonInheritedExternalAttributionOnly: [
-        '/root/src/something.js',
-        '/root/readme.md',
-      ],
-    };
-    const expectedFinalProgressBarData: ProgressBarData = {
-      fileCount: 4,
-      filesWithManualAttributionCount: 1,
-      filesWithOnlyExternalAttributionCount: 1,
-      filesWithOnlyPreSelectedAttributionCount: 0,
-      resourcesWithNonInheritedExternalAttributionOnly: ['/root/readme.md'],
-    };
 
     const testStore = createTestAppStore();
     testStore.dispatch(
@@ -222,9 +203,6 @@ describe('The savePackageInfo action', () => {
     expect(
       getResourcesWithManualAttributedChildren(testStore.getState())
     ).toEqual({});
-    expect(getProgressBarData(testStore.getState())).toEqual(
-      expectedInitialProgressBarData
-    );
     expect(wereTemporaryPackageInfoModified(testStore.getState())).toBe(true);
 
     testStore.dispatch(
@@ -239,9 +217,6 @@ describe('The savePackageInfo action', () => {
       '/': new Set().add('/root/src/'),
       '/root/': new Set().add('/root/src/'),
     });
-    expect(getProgressBarData(testStore.getState())).toEqual(
-      expectedFinalProgressBarData
-    );
     expect(wereTemporaryPackageInfoModified(testStore.getState())).toBe(false);
   });
 
@@ -252,13 +227,6 @@ describe('The savePackageInfo action', () => {
       packageName: 'test Package',
       licenseText: ' test License text',
       attributionConfidence: DiscreteConfidence.Low,
-    };
-    const expectedProgressBarData: ProgressBarData = {
-      fileCount: 4,
-      filesWithManualAttributionCount: 1,
-      filesWithOnlyExternalAttributionCount: 0,
-      filesWithOnlyPreSelectedAttributionCount: 0,
-      resourcesWithNonInheritedExternalAttributionOnly: [],
     };
 
     testStore.dispatch(
@@ -279,9 +247,6 @@ describe('The savePackageInfo action', () => {
       '/root/': new Set().add('/root/src/something.js'),
       '/root/src/': new Set().add('/root/src/something.js'),
     });
-    expect(getProgressBarData(testStore.getState())).toEqual(
-      expectedProgressBarData
-    );
 
     expect(wereTemporaryPackageInfoModified(testStore.getState())).toBe(true);
 
@@ -303,9 +268,6 @@ describe('The savePackageInfo action', () => {
       '/root/': new Set().add('/root/src/something.js'),
       '/root/src/': new Set().add('/root/src/something.js'),
     });
-    expect(getProgressBarData(testStore.getState())).toEqual(
-      expectedProgressBarData
-    );
     expect(wereTemporaryPackageInfoModified(testStore.getState())).toBe(false);
   });
 
@@ -344,22 +306,6 @@ describe('The savePackageInfo action', () => {
         '/': new Set<string>().add('/root/somethingElse.js'),
         '/root/': new Set<string>().add('/root/somethingElse.js'),
       };
-    const expectedInitialProgressBarData: ProgressBarData = {
-      fileCount: 2,
-      filesWithManualAttributionCount: 2,
-      filesWithOnlyExternalAttributionCount: 0,
-      filesWithOnlyPreSelectedAttributionCount: 0,
-      resourcesWithNonInheritedExternalAttributionOnly: [],
-    };
-    const expectedFinalProgressBarData: ProgressBarData = {
-      fileCount: 2,
-      filesWithManualAttributionCount: 1,
-      filesWithOnlyExternalAttributionCount: 1,
-      filesWithOnlyPreSelectedAttributionCount: 0,
-      resourcesWithNonInheritedExternalAttributionOnly: [
-        '/root/src/something.js',
-      ],
-    };
     const emptyTestTemporaryPackageInfo: PackageInfo = {};
 
     const testStore = createTestAppStore();
@@ -376,9 +322,6 @@ describe('The savePackageInfo action', () => {
     );
     testStore.dispatch(setSelectedResourceId('/root/src/something.js'));
     testStore.dispatch(setSelectedAttributionId(testUuidA));
-    expect(getProgressBarData(testStore.getState())).toEqual(
-      expectedInitialProgressBarData
-    );
     expect(
       getResourcesWithManualAttributedChildren(testStore.getState())
     ).toEqual(expectedResourcesWithManualAttributedChildren1);
@@ -405,9 +348,6 @@ describe('The savePackageInfo action', () => {
     expect(
       getResourcesWithManualAttributedChildren(testStore.getState())
     ).toEqual(expectedResourcesWithManualAttributedChildren2);
-    expect(getProgressBarData(testStore.getState())).toEqual(
-      expectedFinalProgressBarData
-    );
     expect(wereTemporaryPackageInfoModified(testStore.getState())).toBe(false);
   });
 
@@ -584,13 +524,6 @@ describe('The savePackageInfo action', () => {
           .add('/somethingElse.js') as Set<string>,
       },
     };
-    const expectedProgressBarData: ProgressBarData = {
-      fileCount: 2,
-      filesWithManualAttributionCount: 2,
-      filesWithOnlyExternalAttributionCount: 0,
-      filesWithOnlyPreSelectedAttributionCount: 0,
-      resourcesWithNonInheritedExternalAttributionOnly: [],
-    };
 
     const testStore = createTestAppStore();
     testStore.dispatch(
@@ -605,9 +538,6 @@ describe('The savePackageInfo action', () => {
         })
       )
     );
-    expect(getProgressBarData(testStore.getState())).toEqual(
-      expectedProgressBarData
-    );
 
     testStore.dispatch(
       setMultiSelectSelectedAttributionIds(['toReplaceUuid', 'uuid1'])
@@ -621,9 +551,6 @@ describe('The savePackageInfo action', () => {
       )
     );
     expect(getManualData(testStore.getState())).toEqual(expectedManualData);
-    expect(getProgressBarData(testStore.getState())).toEqual(
-      expectedProgressBarData
-    );
     expect(getSelectedAttributionId(testStore.getState())).toEqual('uuid1');
     expect(
       getMultiSelectSelectedAttributionIds(testStore.getState())
@@ -665,22 +592,6 @@ describe('The savePackageInfo action', () => {
         '/folder/': new Set<string>().add('/folder/somethingElse.js'),
       },
     };
-    const expectedInitialProgressBarData: ProgressBarData = {
-      fileCount: 2,
-      filesWithManualAttributionCount: 1,
-      filesWithOnlyExternalAttributionCount: 1,
-      filesWithOnlyPreSelectedAttributionCount: 0,
-      resourcesWithNonInheritedExternalAttributionOnly: [
-        '/folder/somethingElse.js',
-      ],
-    };
-    const expectedFinalProgressBarData: ProgressBarData = {
-      fileCount: 2,
-      filesWithManualAttributionCount: 2,
-      filesWithOnlyExternalAttributionCount: 0,
-      filesWithOnlyPreSelectedAttributionCount: 0,
-      resourcesWithNonInheritedExternalAttributionOnly: [],
-    };
 
     const testStore = createTestAppStore();
     testStore.dispatch(
@@ -694,17 +605,11 @@ describe('The savePackageInfo action', () => {
         })
       )
     );
-    expect(getProgressBarData(testStore.getState())).toEqual(
-      expectedInitialProgressBarData
-    );
 
     testStore.dispatch(
       savePackageInfo('/folder/somethingElse.js', null, testPackageInfo)
     );
     expect(getManualData(testStore.getState())).toEqual(expectedManualData);
-    expect(getProgressBarData(testStore.getState())).toEqual(
-      expectedFinalProgressBarData
-    );
   });
 
   it('removes an attribution and keeps temporary package info for selected attribution', () => {
