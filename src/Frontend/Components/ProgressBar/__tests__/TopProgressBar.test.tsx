@@ -105,9 +105,4 @@ describe('TopProgressBar', () => {
         screen.getByText(/Files with only signals: 1/)
     ).toBeDefined();
   });
-
-  it('TopProgressBar does not render when no file has been opened', () => {
-    renderComponentWithStore(<TopProgressBar />);
-    expect(screen.queryByLabelText('TopProgressBar')).not.toBeInTheDocument();
-  });
 });
