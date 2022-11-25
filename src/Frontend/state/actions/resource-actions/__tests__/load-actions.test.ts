@@ -140,15 +140,16 @@ describe('loadFromFile', () => {
         '/root/src/': new Set<string>().add('/root/src/something.js'),
       },
     };
-    const expectedProgressBarData: ProgressBarData = getUpdatedProgressBarData(
-      testResources,
-      testManualAttributions,
-      testResourcesToManualAttributions,
-      testResourcesToExternalAttributions,
-      new Set<string>().add('test_id'),
-      () => false,
-      () => false
-    );
+    const expectedProgressBarData = getUpdatedProgressBarData({
+      resources: testResources,
+      resourceId: '/',
+      manualAttributions: testManualAttributions,
+      resourcesToManualAttributions: testResourcesToManualAttributions,
+      resourcesToExternalAttributions: testResourcesToExternalAttributions,
+      resolvedExternalAttributions: new Set<string>(['test_id']),
+      attributionBreakpoints: new Set<string>(),
+      filesWithChildren: new Set<string>(),
+    });
 
     const testStore = createTestAppStore();
     expect(testStore.getState().resourceState).toMatchObject(
