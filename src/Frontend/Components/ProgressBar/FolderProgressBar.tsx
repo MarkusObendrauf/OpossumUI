@@ -21,7 +21,7 @@ import {
 import { useAppSelector } from '../../state/hooks';
 import { getResolvedExternalAttributions } from '../../state/selectors/audit-view-resource-selectors';
 import { FolderProgressBarWorkerContext } from '../WorkersContextProvider/WorkersContextProvider';
-import { getProgressBarData } from '../../state/helpers/progress-bar-data-helpers';
+import { getUpdatedProgressBarData } from '../../state/helpers/progress-bar-data-helpers';
 import { ProgressBar } from './ProgressBar';
 
 const classes = {
@@ -180,7 +180,7 @@ function logErrorAndComputeInMainProcess(
   syncFallbackArgs: ProgressBarWorkerArgs
 ): void {
   console.info('Error in rendering folder progress bar: ', error);
-  const folderProgressBarData = getProgressBarData(syncFallbackArgs);
+  const folderProgressBarData = getUpdatedProgressBarData(syncFallbackArgs);
   setFolderProgressBarDataAndResourceId({
     folderProgressBarData,
     resourceId: syncFallbackArgs.resourceId,

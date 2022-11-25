@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { Resources, ResourcesToAttributions } from '../../shared/shared-types';
-import { getProgressBarData } from '../state/helpers/progress-bar-data-helpers';
+import { getUpdatedProgressBarData } from '../state/helpers/progress-bar-data-helpers';
 import { ProgressBarDataAndResourceId } from '../types/types';
 
 let cachedResources: Resources | null = null;
@@ -36,7 +36,7 @@ self.onmessage = ({
     cachedAttributionBreakpoints &&
     cachedFilesWithChildren
   ) {
-    const progressBarData = getProgressBarData({
+    const progressBarData = getUpdatedProgressBarData({
       resources: cachedResources,
       resourceId,
       manualAttributions,

@@ -139,7 +139,7 @@ export function resourceHasOnlyPreSelectedAttributions(
   );
 }
 
-export function getProgressBarData(
+export function getUpdatedProgressBarData(
   args: ProgressBarWorkerArgs
 ): ProgressBarData {
   const isAttributionBreakpoint = getAttributionBreakpointCheck(

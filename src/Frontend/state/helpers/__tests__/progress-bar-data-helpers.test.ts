@@ -10,12 +10,12 @@ import {
   ResourcesToAttributions,
 } from '../../../../shared/shared-types';
 import {
-  getProgressBarData,
+  getUpdatedProgressBarData,
   resourceHasOnlyPreSelectedAttributions,
 } from '../progress-bar-data-helpers';
 import { DiscreteConfidence } from '../../../enums/enums';
 
-describe('The getProgressBarData function', () => {
+describe('The getUpdatedProgressBarData function', () => {
   it('gets updated progress data', () => {
     const testResources: Resources = {
       thirdParty: {
@@ -60,7 +60,7 @@ describe('The getProgressBarData function', () => {
       '/thirdParty/package_2.tr.gz': ['resolved_id'],
     };
 
-    const progressBarData = getProgressBarData({
+    const progressBarData = getUpdatedProgressBarData({
       resources: testResources,
       resourceId: '/',
       manualAttributions: testManualAttributions,
@@ -126,7 +126,7 @@ describe('The getProgressBarData function', () => {
       'resolved_id',
     ]);
 
-    const progressBarData = getProgressBarData({
+    const progressBarData = getUpdatedProgressBarData({
       resources: testResources,
       resourceId: '/',
       manualAttributions: testManualAttributions,
@@ -215,7 +215,7 @@ describe('The getProgressBarData function', () => {
       '/folder3/breakpoint3/',
     ]);
 
-    const progressBarData = getProgressBarData({
+    const progressBarData = getUpdatedProgressBarData({
       resources: testResources,
       resourceId: '/',
       manualAttributions: testManualAttributions,
@@ -274,7 +274,7 @@ describe('The getProgressBarData function', () => {
       '/package.json/',
     ]);
 
-    const progressBarData = getProgressBarData({
+    const progressBarData = getUpdatedProgressBarData({
       resources: testResources,
       resourceId: '/',
       manualAttributions: testManualAttributions,
@@ -337,7 +337,7 @@ describe('The getProgressBarData function', () => {
       '/thirdParty/package_2.tr.gz': ['resolved_id'],
     };
 
-    const progressBarData = getProgressBarData({
+    const progressBarData = getUpdatedProgressBarData({
       resources: testResources,
       resourceId: '/root/',
       manualAttributions: testManualAttributions,
