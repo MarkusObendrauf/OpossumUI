@@ -50,13 +50,11 @@ export function TopProgressBar(): ReactElement {
 
   const topProgressBarWorkerArgs = useMemo(
     () => ({
-      resources,
       manualAttributions,
       resourcesToManualAttributions,
       resolvedExternalAttributions,
     }),
     [
-      resources,
       manualAttributions,
       resourcesToManualAttributions,
       resolvedExternalAttributions,
