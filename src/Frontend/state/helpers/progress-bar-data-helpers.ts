@@ -35,7 +35,7 @@ export function filterResourcesToAttributions(
   );
 }
 
-export function updateProgressBarDataForResources(
+function updateProgressBarDataForResources(
   progressBarData: ProgressBarData,
   resources: Resources,
   manualAttributions: Attributions,
@@ -141,7 +141,7 @@ export function resourceHasOnlyPreSelectedAttributions(
 
 export function getProgressBarData(
   args: ProgressBarWorkerArgs
-): ProgressBarData | null {
+): ProgressBarData {
   const isAttributionBreakpoint = getAttributionBreakpointCheck(
     args.attributionBreakpoints
   );

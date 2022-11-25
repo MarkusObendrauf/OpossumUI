@@ -112,6 +112,4 @@ export interface ProgressBarWorkerArgs {
   resolvedExternalAttributions: Set<string>;
   attributionBreakpoints: Set<string>;
   filesWithChildren: Set<string>;
-  // isAttributionBreakpoint: PathPredicate;
-  // isFileWithChildren: PathPredicate;
 }
