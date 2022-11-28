@@ -24,12 +24,30 @@ self.onmessage = ({
     filesWithChildren,
   },
 }): void => {
-  if (resources) cachedResources = resources;
-  if (resourcesToExternalAttributions)
-    cachedResourcesToExternalAttributions = resourcesToExternalAttributions;
-  if (attributionBreakpoints)
-    cachedAttributionBreakpoints = attributionBreakpoints;
-  if (filesWithChildren) cachedFilesWithChildren = filesWithChildren;
+  // throw new Error(JSON.stringify({
+  //   input: {
+  //     resources: resources,
+  //     resourceId: resourceId,
+  //     manualAttributions: manualAttributions,
+  //     resourcesToManualAttributions: resourcesToManualAttributions,
+  //     resourcesToExternalAttributions: resourcesToExternalAttributions,
+  //     resolvedExternalAttributions: resolvedExternalAttributions,
+  //     attributionBreakpoints: attributionBreakpoints,
+  //     filesWithChildren: filesWithChildren,
+  //   },
+  // }));
+  self.postMessage({
+    input: {
+      resources: resources,
+      resourceId: resourceId,
+      manualAttributions: manualAttributions,
+      resourcesToManualAttributions: resourcesToManualAttributions,
+      resourcesToExternalAttributions: resourcesToExternalAttributions,
+      resolvedExternalAttributions: resolvedExternalAttributions,
+      attributionBreakpoints: attributionBreakpoints,
+      filesWithChildren: filesWithChildren,
+    },
+  });
   if (
     cachedResources &&
     cachedResourcesToExternalAttributions &&
@@ -38,11 +56,11 @@ self.onmessage = ({
   ) {
     const progressBarData = getUpdatedProgressBarData({
       resources: cachedResources,
-      resourceId,
-      manualAttributions,
-      resourcesToManualAttributions,
+      resourceId: resourceId,
+      manualAttributions: manualAttributions,
+      resourcesToManualAttributions: resourcesToManualAttributions,
       resourcesToExternalAttributions: cachedResourcesToExternalAttributions,
-      resolvedExternalAttributions,
+      resolvedExternalAttributions: resolvedExternalAttributions,
       attributionBreakpoints: cachedAttributionBreakpoints,
       filesWithChildren: cachedFilesWithChildren,
     });
@@ -56,6 +74,11 @@ self.onmessage = ({
       output,
     });
   } else {
-    self.postMessage({ output: null });
+    if (resources) cachedResources = resources;
+    if (resourcesToExternalAttributions)
+      cachedResourcesToExternalAttributions = resourcesToExternalAttributions;
+    if (attributionBreakpoints)
+      cachedAttributionBreakpoints = attributionBreakpoints;
+    if (filesWithChildren) cachedFilesWithChildren = filesWithChildren;
   }
 };
