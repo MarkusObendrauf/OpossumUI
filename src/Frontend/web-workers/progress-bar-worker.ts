@@ -32,11 +32,11 @@ self.onmessage = ({
   ) {
     const progressBarData = getUpdatedProgressBarData({
       resources: cachedResources,
-      resourceId: resourceId,
-      manualAttributions: manualAttributions,
-      resourcesToManualAttributions: resourcesToManualAttributions,
+      resourceId,
+      manualAttributions,
+      resourcesToManualAttributions,
       resourcesToExternalAttributions: cachedResourcesToExternalAttributions,
-      resolvedExternalAttributions: resolvedExternalAttributions,
+      resolvedExternalAttributions,
       attributionBreakpoints: cachedAttributionBreakpoints,
       filesWithChildren: cachedFilesWithChildren,
     });

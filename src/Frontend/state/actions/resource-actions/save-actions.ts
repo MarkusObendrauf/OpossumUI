@@ -90,8 +90,6 @@ export function savePackageInfo(
   applyContextMenuActionOnDifferentAttribution?: boolean
 ): AppThunkAction {
   return (dispatch: AppThunkDispatch, getState: () => State): void => {
-    console.log('beginning save dispatch');
-    console.log(performance.now());
     const strippedPackageInfo: PackageInfo = getStrippedPackageInfo(
       getPackageInfoWithDefaultConfidenceIfNotLowOrHigh(packageInfo)
     );
@@ -159,10 +157,7 @@ export function savePackageInfo(
       )
     );
 
-    console.log('saving to file');
     dispatch(saveManualAndResolvedAttributionsToFile());
-    console.log('saved!');
-    console.log(performance.now());
   };
 }
 

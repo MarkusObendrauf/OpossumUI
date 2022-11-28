@@ -125,7 +125,9 @@ export function TopProgressBar(): ReactElement {
             syncFallbackArgs
           );
         } else {
-          setTopProgressBarData(messageEvent['data']['output']['progressBarData']);
+          setTopProgressBarData(
+            messageEvent['data']['output']['progressBarData']
+          );
         }
       };
     } catch (error) {
