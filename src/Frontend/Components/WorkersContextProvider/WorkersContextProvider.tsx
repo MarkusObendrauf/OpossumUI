@@ -75,12 +75,6 @@ export const ProgressBarWorkersContextProvider: FC<{
   useMemo(() => {
     try {
       Object.values(progressBarWorkers).forEach((worker) => {
-        console.log("calling worker from context provider with args:", {
-          resources,
-          resourcesToExternalAttributions,
-          attributionBreakpoints,
-          filesWithChildren,
-        });
         worker.postMessage({
           resources,
           resourcesToExternalAttributions,

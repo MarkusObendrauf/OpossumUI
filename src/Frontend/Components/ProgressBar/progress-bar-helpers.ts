@@ -43,7 +43,7 @@ export function getProgressBarTooltipText(
 
 export function getProgressBarBackground(
   progressBarData: ProgressBarData,
-  isFolderProgressBar?: boolean
+  isFolderProgressBar: boolean
 ): string {
   let filesWithManualAttributions: number =
     (progressBarData.filesWithManualAttributionCount /

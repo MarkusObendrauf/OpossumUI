@@ -94,7 +94,7 @@ export function TopProgressBar(): ReactElement {
       topProgressBarSyncFallbackArgs
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [topProgressBarWorker, topProgressBarWorkerArgs, setTopProgressBarData]);
+  }, [topProgressBarWorker, topProgressBarWorkerArgs]);
 
   return topProgressBarData ? (
     <ProgressBar
@@ -115,11 +115,9 @@ export function TopProgressBar(): ReactElement {
     syncFallbackArgs: ProgressBarWorkerArgs
   ): Promise<void> {
     try {
-      console.log("calling top worker with args:", workerArgs);
       worker.postMessage(workerArgs);
 
       worker.onmessage = (messageEvent): void => {
-        console.log(messageEvent);
         if (!messageEvent['data']['output']) {
           logErrorAndComputeInMainProcess(
             Error('Web Worker execution error.'),
@@ -127,8 +125,7 @@ export function TopProgressBar(): ReactElement {
             syncFallbackArgs
           );
         } else {
-          console.log("setting top progress bar")
-          setTopProgressBarData(messageEvent['data']['output']);
+          setTopProgressBarData(messageEvent['data']['output']['progressBarData']);
         }
       };
     } catch (error) {

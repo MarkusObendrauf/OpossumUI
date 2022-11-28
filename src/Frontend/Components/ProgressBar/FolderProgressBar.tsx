@@ -31,7 +31,7 @@ const classes = {
 };
 
 const EMPTY_FOLDER_PROGRESS_BAR_AND_RESOURCE_ID = {
-  folderProgressBarData: null,
+  progressBarData: null,
   resourceId: '',
 };
 
@@ -121,7 +121,7 @@ export function FolderProgressBar(props: FolderProgressBarProps): ReactElement {
     folderProgressBarDataAndResourceId.resourceId
   ) {
     displayedProgressBarData =
-      folderProgressBarDataAndResourceId.folderProgressBarData;
+      folderProgressBarDataAndResourceId.progressBarData;
   } else {
     displayedProgressBarData = null;
   }
@@ -182,9 +182,9 @@ function logErrorAndComputeInMainProcess(
   syncFallbackArgs: ProgressBarWorkerArgs
 ): void {
   console.info('Error in rendering folder progress bar: ', error);
-  const folderProgressBarData = getUpdatedProgressBarData(syncFallbackArgs);
+  const progressBarData = getUpdatedProgressBarData(syncFallbackArgs);
   setFolderProgressBarDataAndResourceId({
-    folderProgressBarData,
+    progressBarData,
     resourceId: syncFallbackArgs.resourceId,
   });
 }

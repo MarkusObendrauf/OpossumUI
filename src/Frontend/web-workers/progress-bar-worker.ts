@@ -24,30 +24,6 @@ self.onmessage = ({
     filesWithChildren,
   },
 }): void => {
-  // throw new Error(JSON.stringify({
-  //   input: {
-  //     resources: resources,
-  //     resourceId: resourceId,
-  //     manualAttributions: manualAttributions,
-  //     resourcesToManualAttributions: resourcesToManualAttributions,
-  //     resourcesToExternalAttributions: resourcesToExternalAttributions,
-  //     resolvedExternalAttributions: resolvedExternalAttributions,
-  //     attributionBreakpoints: attributionBreakpoints,
-  //     filesWithChildren: filesWithChildren,
-  //   },
-  // }));
-  self.postMessage({
-    input: {
-      resources: resources,
-      resourceId: resourceId,
-      manualAttributions: manualAttributions,
-      resourcesToManualAttributions: resourcesToManualAttributions,
-      resourcesToExternalAttributions: resourcesToExternalAttributions,
-      resolvedExternalAttributions: resolvedExternalAttributions,
-      attributionBreakpoints: attributionBreakpoints,
-      filesWithChildren: filesWithChildren,
-    },
-  });
   if (
     cachedResources &&
     cachedResourcesToExternalAttributions &&
@@ -66,7 +42,7 @@ self.onmessage = ({
     });
 
     const output: ProgressBarDataAndResourceId = {
-      folderProgressBarData: progressBarData,
+      progressBarData,
       resourceId,
     };
 
