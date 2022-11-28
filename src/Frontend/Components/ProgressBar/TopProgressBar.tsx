@@ -16,7 +16,7 @@ import {
 import { ProgressBarData, ProgressBarWorkerArgs } from '../../types/types';
 import { useAppSelector } from '../../state/hooks';
 import { ProgressBar } from './ProgressBar';
-import { TopProgressBarWorkerContext } from '../WorkersContextProvider/WorkersContextProvider';
+import { ProgressBarWorkersContext } from '../WorkersContextProvider/WorkersContextProvider';
 import { getResolvedExternalAttributions } from '../../state/selectors/audit-view-resource-selectors';
 import { getUpdatedProgressBarData } from '../../state/helpers/progress-bar-data-helpers';
 
@@ -46,7 +46,9 @@ export function TopProgressBar(): ReactElement {
   const [topProgressBarData, setTopProgressBarData] =
     useState<ProgressBarData | null>(null);
 
-  const topProgressBarWorker = useContext(TopProgressBarWorkerContext);
+  const topProgressBarWorker = useContext(
+    ProgressBarWorkersContext
+  ).TopProgressBarWorker;
 
   const topProgressBarWorkerArgs = useMemo(
     () => ({

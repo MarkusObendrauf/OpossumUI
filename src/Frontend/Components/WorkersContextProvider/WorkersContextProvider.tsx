@@ -13,7 +13,7 @@ import {
   getResourcesToExternalAttributions,
 } from '../../state/selectors/all-views-resource-selectors';
 import { getNewAccordionWorkers } from '../../web-workers/get-new-accordion-workers';
-import { getNewProgressBarWorker } from '../../web-workers/get-new-progress-bar-worker';
+import { getNewProgressBarWorkers } from '../../web-workers/get-new-progress-bar-workers';
 import { PanelAttributionData } from '../../util/get-contained-packages';
 
 const resourceDetailsTabsWorkers = getNewAccordionWorkers();
@@ -58,61 +58,43 @@ export const AccordionWorkersContextProvider: FC<{
   );
 };
 
-const topProgressBarWorker = getNewProgressBarWorker();
-export const TopProgressBarWorkerContext =
-  React.createContext(topProgressBarWorker);
-export const TopProgressBarWorkerContextProvider: FC<{
-  children: ReactNode | null;
-}> = createProgressBarContextProvider(
-  topProgressBarWorker,
-  TopProgressBarWorkerContext,
-);
+const progressBarWorkers = getNewProgressBarWorkers();
+export const ProgressBarWorkersContext =
+  React.createContext(progressBarWorkers);
 
-const folderProgressBarWorker = getNewProgressBarWorker();
-export const FolderProgressBarWorkerContext = React.createContext(
-  folderProgressBarWorker
-);
-export const FolderProgressBarWorkerContextProvider: FC<{
+export const ProgressBarWorkersContextProvider: FC<{
   children: ReactNode | null;
-}> = createProgressBarContextProvider(
-  folderProgressBarWorker,
-  FolderProgressBarWorkerContext,
-);
+}> = ({ children }) => {
+  const resources = useAppSelector(getResources);
+  const resourcesToExternalAttributions = useAppSelector(
+    getResourcesToExternalAttributions
+  );
+  const attributionBreakpoints = useAppSelector(getAttributionBreakpoints);
+  const filesWithChildren = useAppSelector(getFilesWithChildren);
 
-function createProgressBarContextProvider(
-  progressBarWorker: Worker,
-  progressBarWorkerContext: React.Context<Worker>,
-): FC<{
-  children: ReactNode | null;
-}> {
-  return ({ children }) => {
-    const resources = useAppSelector(getResources);
-    const resourcesToExternalAttributions = useAppSelector(
-      getResourcesToExternalAttributions
-    );
-    const attributionBreakpoints = useAppSelector(getAttributionBreakpoints);
-    const filesWithChildren = useAppSelector(getFilesWithChildren);
-    useMemo(() => {
-      try {
-        progressBarWorker.postMessage({
+  useMemo(() => {
+    try {
+      Object.values(progressBarWorkers).forEach((worker) => {
+        worker.postMessage({
           resources,
           resourcesToExternalAttributions,
           attributionBreakpoints,
           filesWithChildren,
         });
-      } catch (error) {
-        console.info('Web worker error in workers context provider: ', error);
-      }
-    }, [
-      resources,
-      resourcesToExternalAttributions,
-      attributionBreakpoints,
-      filesWithChildren,
-    ]);
-    return (
-      <progressBarWorkerContext.Provider value={progressBarWorker}>
-        {children}
-      </progressBarWorkerContext.Provider>
-    );
-  };
-}
+      });
+    } catch (error) {
+      console.info('Web worker error in workers context provider: ', error);
+    }
+  }, [
+    resources,
+    resourcesToExternalAttributions,
+    attributionBreakpoints,
+    filesWithChildren,
+  ]);
+
+  return (
+    <ProgressBarWorkersContext.Provider value={progressBarWorkers}>
+      {children}
+    </ProgressBarWorkersContext.Provider>
+  );
+};
