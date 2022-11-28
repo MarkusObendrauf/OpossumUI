@@ -59,10 +59,3 @@ self.onmessage = ({
     self.postMessage({ output: null });
   }
 };
-
-self.onerror = (): void => {
-  cachedResources = null;
-  cachedResourcesToExternalAttributions = null;
-  cachedAttributionBreakpoints = null;
-  cachedFilesWithChildren = null;
-};

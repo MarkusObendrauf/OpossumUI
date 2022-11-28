@@ -148,10 +148,13 @@ export function getUpdatedProgressBarData(
   const isFileWithChildren = getFileWithChildrenCheck(args.filesWithChildren);
   const progressBarData = getEmptyProgressBarData();
 
-  const parentAndCurrentResources = args.resourceId.slice(1, -1).split('/');
-  const resources = {
-    '': getCurrentSubTree(parentAndCurrentResources, args.resources || {}),
-  };
+  let resources = args.resources || {};
+  if (args.resourceId) {
+    const parentAndCurrentResources = args.resourceId.slice(1, -1).split('/');
+    resources = {
+      '': getCurrentSubTree(parentAndCurrentResources, resources),
+    };
+  }
 
   updateProgressBarDataForResources(
     progressBarData,

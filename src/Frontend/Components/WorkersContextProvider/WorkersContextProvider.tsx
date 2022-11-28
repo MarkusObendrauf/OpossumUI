@@ -65,7 +65,7 @@ export const TopProgressBarWorkerContextProvider: FC<{
   children: ReactNode | null;
 }> = createProgressBarContextProvider(
   topProgressBarWorker,
-  TopProgressBarWorkerContext
+  TopProgressBarWorkerContext,
 );
 
 const folderProgressBarWorker = getNewProgressBarWorker();
@@ -76,12 +76,12 @@ export const FolderProgressBarWorkerContextProvider: FC<{
   children: ReactNode | null;
 }> = createProgressBarContextProvider(
   folderProgressBarWorker,
-  FolderProgressBarWorkerContext
+  FolderProgressBarWorkerContext,
 );
 
 function createProgressBarContextProvider(
   progressBarWorker: Worker,
-  progressBarWorkerContext: React.Context<Worker>
+  progressBarWorkerContext: React.Context<Worker>,
 ): FC<{
   children: ReactNode | null;
 }> {
@@ -110,7 +110,7 @@ function createProgressBarContextProvider(
       filesWithChildren,
     ]);
     return (
-      <progressBarWorkerContext.Provider value={folderProgressBarWorker}>
+      <progressBarWorkerContext.Provider value={progressBarWorker}>
         {children}
       </progressBarWorkerContext.Provider>
     );

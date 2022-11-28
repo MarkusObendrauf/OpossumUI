@@ -50,6 +50,7 @@ export function TopProgressBar(): ReactElement {
 
   const topProgressBarWorkerArgs = useMemo(
     () => ({
+      resourceId: '/',
       manualAttributions,
       resourcesToManualAttributions,
       resolvedExternalAttributions,
@@ -113,16 +114,15 @@ export function TopProgressBar(): ReactElement {
   ): Promise<void> {
     try {
       worker.postMessage(workerArgs);
-
-      worker.onmessage = ({ data: { output } }): void => {
-        if (!output) {
+      worker.onmessage = (messageEvent): void => {
+        if (!messageEvent['data']['output']) {
           logErrorAndComputeInMainProcess(
             Error('Web Worker execution error.'),
             setTopProgressBarData,
             syncFallbackArgs
           );
         } else {
-          setTopProgressBarData(output);
+          setTopProgressBarData(messageEvent['data']['output']);
         }
       };
     } catch (error) {
