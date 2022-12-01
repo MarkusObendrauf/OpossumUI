@@ -116,17 +116,15 @@ export function TopProgressBar(): ReactElement {
     try {
       worker.postMessage(workerArgs);
 
-      worker.onmessage = (messageEvent): void => {
-        if (!messageEvent['data']['output']) {
+      worker.onmessage = ({ data: { output } }): void => {
+        if (!output) {
           logErrorAndComputeInMainProcess(
             Error('Web Worker execution error.'),
             setTopProgressBarData,
             syncFallbackArgs
           );
         } else {
-          setTopProgressBarData(
-            messageEvent['data']['output']['progressBarData']
-          );
+          setTopProgressBarData(output.progressBarData);
         }
       };
     } catch (error) {
