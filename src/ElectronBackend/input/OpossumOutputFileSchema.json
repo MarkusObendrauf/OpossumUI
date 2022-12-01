@@ -14,16 +14,9 @@
         "fileCreationDate": {
           "type": "string",
           "description": "Only for documentation, arbitrary format."
-        },
-        "inputFileMD5Checksum": {
-          "type": "string",
-          "description": "Checksum to check if the input file has changed."
         }
       },
-      "required": [
-        "projectId",
-        "fileCreationDate"
-      ],
+      "required": ["projectId", "fileCreationDate"],
       "additionalProperties": false,
       "inputFileMD5Checksum": {
         "type": "string",
@@ -99,9 +92,7 @@
           },
           "followUp": {
             "type": "string",
-            "enum": [
-              "FOLLOW_UP"
-            ],
+            "enum": ["FOLLOW_UP"],
             "description": "Indicates that an attribution is problematic and needs to be followed up."
           },
           "originId": {
@@ -132,10 +123,6 @@
       }
     }
   },
-  "required": [
-    "metadata",
-    "manualAttributions",
-    "resourcesToAttributions"
-  ],
+  "required": ["metadata", "manualAttributions", "resourcesToAttributions"],
   "additionalProperties": true
 }
