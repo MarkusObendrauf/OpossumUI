@@ -87,7 +87,7 @@ export function TopBar(): ReactElement {
           />
         }
       />
-      {showTopProgressBar ? <TopProgressBar /> : null}
+      {showTopProgressBar ? <TopProgressBar /> : <MuiBox flex={1} />}
       <MuiToggleButtonGroup
         size="small"
         value={selectedView}
