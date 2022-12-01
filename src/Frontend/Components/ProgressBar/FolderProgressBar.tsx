@@ -129,9 +129,8 @@ export function FolderProgressBar(props: FolderProgressBarProps): ReactElement {
   return displayedProgressBarData ? (
     <ProgressBar
       sx={classes.root}
+      progressBarType={'FolderProgressBar'}
       progressBarData={displayedProgressBarData}
-      label={'FolderProgressBar'}
-      isFolderProgressBar
     />
   ) : (
     <MuiSkeleton height={20} />

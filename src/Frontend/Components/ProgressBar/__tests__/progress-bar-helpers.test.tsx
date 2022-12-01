@@ -102,7 +102,7 @@ describe('ProgressBar helpers', () => {
       ` ${OpossumColors.lightestBlue} 99%)`;
     const actualProgressBarBackground = getProgressBarBackground(
       testProgressBarData,
-      false
+      'TopProgressBar'
     );
     expect(actualProgressBarBackground).toEqual(expectedProgressBarBackground);
   });

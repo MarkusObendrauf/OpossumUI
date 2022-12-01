@@ -99,9 +99,8 @@ export function TopProgressBar(): ReactElement {
   return topProgressBarData ? (
     <ProgressBar
       sx={classes.root}
+      progressBarType={'TopProgressBar'}
       progressBarData={topProgressBarData}
-      label={'TopProgressBar'}
-      isFolderProgressBar={false}
     />
   ) : (
     <MuiBox sx={classes.root} />

@@ -113,3 +113,5 @@ export interface ProgressBarWorkerArgs {
   attributionBreakpoints: Set<string>;
   filesWithChildren: Set<string>;
 }
+
+export type ProgressBarType = 'FolderProgressBar' | 'TopProgressBar';
