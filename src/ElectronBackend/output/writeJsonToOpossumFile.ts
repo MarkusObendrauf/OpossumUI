@@ -16,18 +16,23 @@ export async function writeOutputJsonToOpossumFile(
   opossumfilePath: string,
   outputfileData: unknown,
 ): Promise<void> {
-  const unzipResult: fflate.Unzipped = {};
-  unzipResult[INPUT_FILE_NAME] = getGlobalBackendState()
-    .inputFileRaw as Uint8Array;
-  unzipResult[OUTPUT_FILE_NAME] = fflate.strToU8(
+  const inputFileDataToConsume =
+    getGlobalBackendState().inputFileRaw?.slice() as Uint8Array;
+  const outputFileDataToConsume = fflate.strToU8(
     JSON.stringify(outputfileData),
   );
+
+  const unzipResult: fflate.Unzipped = {
+    [INPUT_FILE_NAME]: inputFileDataToConsume,
+    [OUTPUT_FILE_NAME]: outputFileDataToConsume,
+  };
 
   const zippedData: Uint8Array = await new Promise((resolve) => {
     fflate.zip(
       unzipResult,
       {
         level: OPOSSUM_FILE_COMPRESSION_LEVEL,
+        consume: true,
       },
       (err, data) => {
         if (err) throw err;
