@@ -191,6 +191,8 @@ export function saveManualAndResolvedAttributionsToFile(): AppThunkAction {
       resolvedExternalAttributions: getResolvedExternalAttributions(getState()),
     };
 
+    console.log("calling saveFile");
+    console.log(Date.now());
     window.electronAPI.saveFile(saveFileArgs);
   };
 }

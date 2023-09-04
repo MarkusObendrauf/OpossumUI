@@ -66,12 +66,16 @@ export function getSaveFileListener(
   return createListenerCallbackWithErrorHandling(
     mainWindow,
     (_: unknown, args: SaveFileArgs) => {
+      // 1.56 seconds to reach here
+      console.log(Date.now());
+      console.log("entered save file listener");
+
       const globalBackendState = getGlobalBackendState();
 
       if (globalBackendState.projectId === undefined) {
         throw new Error(
           'Failed to save data. The projectId is incorrect.' +
-            `\nprojectId: ${globalBackendState.projectId}`,
+          `\nprojectId: ${globalBackendState.projectId}`,
         );
       }
 
@@ -88,7 +92,13 @@ export function getSaveFileListener(
         ),
       };
 
+      console.log(new Date());
+      console.log("3");
+
       writeOutputJsonToFile(outputFileContent);
+
+      console.log(new Date());
+      console.log("left listener");
     },
   );
 }
@@ -224,7 +234,7 @@ export function getDeleteAndCreateNewAttributionFileListener(
     } else {
       throw new Error(
         'Failed to delete output file. Attribution file path is incorrect:' +
-          `\n${globalBackendState.attributionFilePath}`,
+        `\n${globalBackendState.attributionFilePath}`,
       );
     }
     await openFile(mainWindow, resourceFilePath);
@@ -259,8 +269,8 @@ function tryToGetInputFileFromOutputFile(filePath: string): string {
   return fs.existsSync(filePath.replace(outputFileRegex, jsonFileExtension))
     ? filePath.replace(outputFileRegex, jsonFileExtension)
     : fs.existsSync(filePath.replace(outputFileRegex, jsonGzipFileExtension))
-    ? filePath.replace(outputFileRegex, jsonGzipFileExtension)
-    : filePath;
+      ? filePath.replace(outputFileRegex, jsonGzipFileExtension)
+      : filePath;
 }
 
 export async function openFile(
@@ -284,9 +294,9 @@ function setTitle(mainWindow: BrowserWindow, filePath: string): void {
 
   mainWindow.setTitle(
     getGlobalBackendState().projectTitle ||
-      decodeURIComponent(
-        upath.toUnix(filePath).split('/').pop() || defaultTitle,
-      ),
+    decodeURIComponent(
+      upath.toUnix(filePath).split('/').pop() || defaultTitle,
+    ),
   );
 }
 
