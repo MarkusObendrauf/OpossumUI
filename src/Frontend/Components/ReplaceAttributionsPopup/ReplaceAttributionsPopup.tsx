@@ -103,7 +103,7 @@ export const ReplaceAttributionsPopup = ({
         <CardList
           data={attributionIdsForReplacement}
           data-testid={'removed-attributions'}
-          renderItemContent={(attributionId, index) => {
+          renderItemContent={(attributionId, { index }) => {
             if (!attributionId || !(attributionId in attributions)) {
               return null;
             }
