@@ -4,18 +4,28 @@
 // SPDX-License-Identifier: Apache-2.0
 import { SxProps } from '@mui/system';
 import { defer } from 'lodash';
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Virtuoso, VirtuosoHandle, VirtuosoProps } from 'react-virtuoso';
 
+import { useVirtuosoRefs } from '../../util/use-virtuoso-refs';
 import { LoadingMask } from '../LoadingMask/LoadingMask';
 import { NoResults } from '../NoResults/NoResults';
 import { StyledLinearProgress } from './List.style';
+
+export interface ListItemContentProps {
+  index: number;
+  selected: boolean;
+  focused: boolean;
+}
 
 export interface ListProps {
   className?: string;
   data: ReadonlyArray<string> | null;
   loading?: boolean;
-  renderItemContent: (datum: string, index: number) => React.ReactNode;
+  renderItemContent: (
+    datum: string,
+    props: ListItemContentProps,
+  ) => React.ReactNode;
   selected?: string;
   sx?: SxProps;
   testId?: string;
@@ -31,8 +41,6 @@ export function List({
   testId,
   ...props
 }: ListProps & Omit<VirtuosoProps<string, unknown>, 'data' | 'selected'>) {
-  const ref = useRef<VirtuosoHandle>(null);
-
   const selectedIndex = useMemo(() => {
     if (!data) {
       return undefined;
@@ -40,6 +48,11 @@ export function List({
 
     return data.findIndex((datum) => datum === selected);
   }, [data, selected]);
+
+  const { focusedIndex, ref, scrollerRef } = useVirtuosoRefs<VirtuosoHandle>({
+    data,
+    selectedIndex,
+  });
 
   useEffect(() => {
     if (selectedIndex !== undefined && selectedIndex >= 0) {
@@ -50,7 +63,7 @@ export function List({
         }),
       );
     }
-  }, [selectedIndex]);
+  }, [selectedIndex, ref]);
 
   return (
     <LoadingMask
@@ -76,8 +89,15 @@ export function List({
           EmptyPlaceholder:
             loading || data.length ? undefined : () => <NoResults />,
         }}
+        scrollerRef={scrollerRef}
         data={data}
-        itemContent={(index) => renderItemContent(data[index], index)}
+        itemContent={(index) =>
+          renderItemContent(data[index], {
+            index,
+            selected: index === selectedIndex,
+            focused: index === focusedIndex,
+          })
+        }
         {...props}
       />
     );

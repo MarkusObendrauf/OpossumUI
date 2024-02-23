@@ -10,7 +10,7 @@ import MuiBox from '@mui/material/Box';
 import MuiTooltip from '@mui/material/Tooltip';
 import { SxProps } from '@mui/system';
 import { defer } from 'lodash';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   GroupedVirtuoso,
   GroupedVirtuosoHandle,
@@ -19,16 +19,26 @@ import {
 
 import { text } from '../../../shared/text';
 import { OpossumColors } from '../../shared-styles';
+import { useVirtuosoRefs } from '../../util/use-virtuoso-refs';
 import { LoadingMask } from '../LoadingMask/LoadingMask';
 import { NoResults } from '../NoResults/NoResults';
 import { GroupContainer, StyledLinearProgress } from './GroupedList.style';
+
+export interface GroupedListItemContentProps {
+  index: number;
+  selected: boolean;
+  focused: boolean;
+}
 
 export interface GroupedListProps {
   className?: string;
   grouped: Record<string, ReadonlyArray<string>> | null;
   loading?: boolean;
   renderGroupName?: (key: string) => React.ReactNode;
-  renderItemContent: (datum: string, index: number) => React.ReactNode;
+  renderItemContent: (
+    datum: string,
+    props: GroupedListItemContentProps,
+  ) => React.ReactNode;
   selected?: string;
   sx?: SxProps;
   testId?: string;
@@ -45,7 +55,6 @@ export function GroupedList({
   testId,
   ...props
 }: GroupedListProps & Omit<GroupedVirtuosoProps<string, unknown>, 'selected'>) {
-  const ref = useRef<GroupedVirtuosoHandle>(null);
   const [{ startIndex, endIndex }, setRange] = useState<{
     startIndex: number;
     endIndex: number;
@@ -66,6 +75,12 @@ export function GroupedList({
     };
   }, [grouped, selected]);
 
+  const { ref, scrollerRef, focusedIndex } =
+    useVirtuosoRefs<GroupedVirtuosoHandle>({
+      data: groups?.ids,
+      selectedIndex: groups?.selectedIndex,
+    });
+
   useEffect(() => {
     if (groups?.selectedIndex !== undefined && groups.selectedIndex >= 0) {
       defer(() =>
@@ -75,7 +90,7 @@ export function GroupedList({
         }),
       );
     }
-  }, [groups?.selectedIndex]);
+  }, [groups?.selectedIndex, ref]);
 
   return (
     <LoadingMask
@@ -101,6 +116,7 @@ export function GroupedList({
           EmptyPlaceholder:
             loading || groups.ids.length ? undefined : () => <NoResults />,
         }}
+        scrollerRef={scrollerRef}
         rangeChanged={setRange}
         groupCounts={groups?.counts}
         groupContent={(index) => (
@@ -114,7 +130,13 @@ export function GroupedList({
             )}
           </GroupContainer>
         )}
-        itemContent={(index) => renderItemContent(groups.ids[index], index)}
+        itemContent={(index) =>
+          renderItemContent(groups.ids[index], {
+            index,
+            selected: index === groups.selectedIndex,
+            focused: index === focusedIndex,
+          })
+        }
         {...props}
       />
     );
