@@ -2,9 +2,8 @@
 // SPDX-FileCopyrightText: TNG Technology Consulting GmbH <https://www.tngtech.com>
 //
 // SPDX-License-Identifier: Apache-2.0
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { VirtuosoHandle } from 'react-virtuoso';
-import { usePrevious } from './use-previous';
 
 export function useVirtuosoRefs<T extends VirtuosoHandle>({
   data,
@@ -16,19 +15,6 @@ export function useVirtuosoRefs<T extends VirtuosoHandle>({
   const ref = useRef<T>(null);
   const listRef = useRef<Window | HTMLElement>();
   const [focusedIndex, setFocusedIndex] = useState(selectedIndex ?? -1);
-
-  const selectedDatumId = data && selectedIndex && data[selectedIndex];
-  const previouslySelectedDatumId = usePrevious(selectedDatumId);
-
-  useEffect(() => {
-    if (selectedIndex !== undefined
-      && data
-      && data[selectedIndex] !== undefined
-      && selectedDatumId !== previouslySelectedDatumId
-    ) {
-      // setFocusedIndex(selectedIndex);
-    }
-  }, [selectedIndex]);
 
   const keyDownCallback = useCallback(
     (event: Event) => {

@@ -54,6 +54,7 @@ export function List({
     data,
     selectedIndex,
   });
+  console.log(focusedIndex);
 
   useEffect(() => {
     if (selectedIndex !== undefined && selectedIndex >= 0) {
@@ -97,7 +98,9 @@ export function List({
             index,
             selected: index === selectedIndex,
             focused: index === focusedIndex,
-            setFocused: () => setFocusedIndex(index),
+            setFocused: () => {
+              setFocusedIndex(index)
+            },
           })
         }
         {...props}

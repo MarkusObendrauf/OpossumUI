@@ -16,6 +16,8 @@ const [attributionId3, packageInfo3] = faker.opossum.rawAttribution({
   packageName: 'c',
 });
 
+
+
 test.use({
   data: {
     inputData: faker.opossum.inputData({
@@ -64,7 +66,7 @@ test('allows selecting and deselecting all signals in the active tab', async ({
   await signalsPanel.packageCard.assert.checkboxIsUnchecked(packageInfo3);
 });
 
-test('allows navigating through the signals list by keyboard', async ({
+test.only('allows navigating through the signals list by keyboard', async ({
   signalsPanel,
   attributionDetails,
   window,

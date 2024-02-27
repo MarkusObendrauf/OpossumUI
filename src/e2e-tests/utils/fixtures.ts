@@ -97,8 +97,8 @@ export const test = base.extend<{
     await window.context().tracing.stop({
       path: info.error
         ? info.outputPath(
-            `${data?.inputData.metadata.projectId || 'app'}.trace.zip`,
-          )
+          `${data?.inputData.metadata.projectId || 'app'}.trace.zip`,
+        )
         : undefined,
     });
     await app.close();
@@ -109,7 +109,7 @@ export const test = base.extend<{
       info.fixme();
     });
   },
-  modKey: async ({}, use) => {
+  modKey: async ({ }, use) => {
     await use(os.platform() === 'darwin' ? 'Meta' : 'Control');
   },
   projectStatisticsPopup: async ({ window }, use) => {

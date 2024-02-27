@@ -28,6 +28,7 @@ export interface GroupedListItemContentProps {
   index: number;
   selected: boolean;
   focused: boolean;
+  setFocused: () => void;
 }
 
 export interface GroupedListProps {
@@ -75,7 +76,7 @@ export function GroupedList({
     };
   }, [grouped, selected]);
 
-  const { ref, scrollerRef, focusedIndex } =
+  const { ref, scrollerRef, focusedIndex, setFocusedIndex } =
     useVirtuosoRefs<GroupedVirtuosoHandle>({
       data: groups?.ids,
       selectedIndex: groups?.selectedIndex,
@@ -135,6 +136,7 @@ export function GroupedList({
             index,
             selected: index === groups.selectedIndex,
             focused: index === focusedIndex,
+            setFocused: () => setFocusedIndex(index),
           })
         }
         {...props}
@@ -185,9 +187,9 @@ export function GroupedList({
                 ? undefined
                 : () => ref.current?.scrollToIndex({ index: 0 })
               : () =>
-                  ref.current?.scrollToIndex({
-                    groupIndex: isFirstItemInGroupVisible ? index - 1 : index,
-                  })
+                ref.current?.scrollToIndex({
+                  groupIndex: isFirstItemInGroupVisible ? index - 1 : index,
+                })
           }
         />
       </MuiTooltip>

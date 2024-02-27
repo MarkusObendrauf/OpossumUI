@@ -119,10 +119,10 @@ export function VirtualizedTreeNode({
   const handleClick = readOnly
     ? undefined
     : () => {
+      onSelect(nodeId);
       if (isExpandable && !isExpandedNode) {
         onToggle(getNodeIdsToExpand(nodeId, node));
       }
-      onSelect(nodeId);
       setFocused();
     };
 

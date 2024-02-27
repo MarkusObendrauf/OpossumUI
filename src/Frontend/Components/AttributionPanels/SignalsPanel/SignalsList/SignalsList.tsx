@@ -84,7 +84,7 @@ export const SignalsList: React.FC<PackagesPanelChildrenProps> = ({
 
   function renderAttributionCard(
     attributionId: string,
-    { focused, selected }: GroupedListItemContentProps,
+    { focused, selected, setFocused }: GroupedListItemContentProps,
   ) {
     const attribution = attributions?.[attributionId];
 
@@ -100,6 +100,7 @@ export const SignalsList: React.FC<PackagesPanelChildrenProps> = ({
               dispatch(
                 changeSelectedAttributionOrOpenUnsavedPopup(attribution),
               );
+            setFocused()
           }}
           cardConfig={{
             selected,
