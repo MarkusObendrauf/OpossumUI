@@ -71,5 +71,6 @@ export function useVirtuosoRefs<T extends VirtuosoHandle>({
     ref,
     scrollerRef,
     focusedIndex,
+    setFocusedIndex
   };
 }

@@ -83,6 +83,7 @@ interface VirtualizedTreeNodeProps extends TreeNode {
   readOnly?: boolean;
   selected: boolean;
   focused: boolean;
+  setFocused: () => void;
 }
 
 export function VirtualizedTreeNode({
@@ -96,6 +97,7 @@ export function VirtualizedTreeNode({
   readOnly,
   selected,
   focused,
+  setFocused,
 }: VirtualizedTreeNodeProps) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -121,6 +123,7 @@ export function VirtualizedTreeNode({
         onToggle(getNodeIdsToExpand(nodeId, node));
       }
       onSelect(nodeId);
+      setFocused();
     };
 
   return (

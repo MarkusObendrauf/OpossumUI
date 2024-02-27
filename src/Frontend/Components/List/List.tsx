@@ -16,6 +16,7 @@ export interface ListItemContentProps {
   index: number;
   selected: boolean;
   focused: boolean;
+  setFocused: () => void;
 }
 
 export interface ListProps {
@@ -49,7 +50,7 @@ export function List({
     return data.findIndex((datum) => datum === selected);
   }, [data, selected]);
 
-  const { focusedIndex, ref, scrollerRef } = useVirtuosoRefs<VirtuosoHandle>({
+  const { focusedIndex, ref, scrollerRef, setFocusedIndex } = useVirtuosoRefs<VirtuosoHandle>({
     data,
     selectedIndex,
   });
@@ -96,6 +97,7 @@ export function List({
             index,
             selected: index === selectedIndex,
             focused: index === focusedIndex,
+            setFocused: () => setFocusedIndex(index),
           })
         }
         {...props}

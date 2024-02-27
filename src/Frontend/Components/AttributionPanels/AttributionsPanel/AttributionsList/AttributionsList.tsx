@@ -39,7 +39,7 @@ export const AttributionsList: React.FC<PackagesPanelChildrenProps> = ({
 
   function renderAttributionCard(
     attributionId: string,
-    { selected, focused }: ListItemContentProps,
+    { selected, focused, setFocused }: ListItemContentProps,
   ) {
     const attribution = attributions?.[attributionId];
 
@@ -55,6 +55,7 @@ export const AttributionsList: React.FC<PackagesPanelChildrenProps> = ({
               dispatch(
                 changeSelectedAttributionOrOpenUnsavedPopup(attribution),
               );
+            setFocused()
           }}
           cardConfig={{
             selected,
