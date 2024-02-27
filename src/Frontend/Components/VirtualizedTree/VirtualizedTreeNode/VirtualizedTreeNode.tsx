@@ -9,6 +9,7 @@ import MuiBox from '@mui/material/Box';
 import { Resources } from '../../../../shared/shared-types';
 import { OpossumColors } from '../../../shared-styles';
 import { getNodeIdsToExpand } from './VirtualizedTreeNode.util';
+import { useEffect, useRef } from 'react';
 
 const INDENT_PER_DEPTH_LEVEL = 12;
 const SIMPLE_NODE_EXTRA_INDENT = 28;
@@ -25,6 +26,13 @@ const classes = {
     height: '20px',
     '&:hover .tree-node-selected-indicator': {
       display: 'block',
+    },
+    '&:focus .tree-node-selected-indicator': {
+      display: 'block',
+      border: 0,
+      outline: 'none',
+      boxShadow: 'none',
+      borderColor: 'transparent',
     },
   },
   clickableIcon: {
@@ -74,6 +82,7 @@ interface VirtualizedTreeNodeProps extends TreeNode {
   onToggle: (nodeIdsToExpand: Array<string>) => void;
   readOnly?: boolean;
   selected: boolean;
+  focused: boolean;
 }
 
 export function VirtualizedTreeNode({
@@ -86,7 +95,16 @@ export function VirtualizedTreeNode({
   onToggle,
   readOnly,
   selected,
+  focused,
 }: VirtualizedTreeNodeProps) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (focused) {
+      ref.current?.focus();
+    }
+  }, [focused]);
+
   const isExpandable = node !== 1 && Object.keys(node).length !== 0;
   const marginRight =
     ((nodeId.match(/\//g) || []).length - 1) * INDENT_PER_DEPTH_LEVEL +
@@ -99,14 +117,33 @@ export function VirtualizedTreeNode({
   const handleClick = readOnly
     ? undefined
     : () => {
-        if (isExpandable && !isExpandedNode) {
-          onToggle(getNodeIdsToExpand(nodeId, node));
-        }
-        onSelect(nodeId);
-      };
+      if (isExpandable && !isExpandedNode) {
+        onToggle(getNodeIdsToExpand(nodeId, node));
+      }
+      onSelect(nodeId);
+    };
 
   return (
-    <MuiBox sx={classes.listNode} onClick={handleClick}>
+    <MuiBox
+      sx={classes.listNode}
+      onClick={handleClick}
+      tabIndex={0}
+      ref={ref}
+      onKeyDown={(event) => {
+        if (['Enter', 'Space'].includes(event.code)) {
+          event.preventDefault();
+          handleClick?.();
+        }
+        if (event.code === 'ArrowRight' && !isExpandedNode) {
+          event.preventDefault();
+          onToggle?.([nodeId]);
+        }
+        if (event.code === 'ArrowLeft' && isExpandedNode) {
+          event.preventDefault();
+          onToggle?.([nodeId]);
+        }
+      }}
+    >
       <MuiBox sx={classes.treeNodeSpacer} style={{ width: marginRight }} />
       {renderExpandableNodeIcon()}
       <MuiBox
